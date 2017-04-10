@@ -1,10 +1,8 @@
 package lc_SetMatrixZero;
 
-import java.awt.SecondaryLoop;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 /**
 Set Matrix Zeroes (Java)
