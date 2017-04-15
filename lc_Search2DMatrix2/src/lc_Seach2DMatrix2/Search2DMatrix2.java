@@ -22,8 +22,24 @@ public class Search2DMatrix2 {
 		}
 	}
 	
-	public boolean searchMatrix(int [][] M, int key) {
-		return false;
+	public boolean searchMatrix(int [][] M, int target) {
+		int m=matrix.length-1;
+	    int n=matrix[0].length-1;
+	 
+	    int i=m; 
+	    int j=0;
+	 
+	    while(i>=0 && j<=n){
+	        if(target < matrix[i][j]){
+	            i--;
+	        }else if(target > matrix[i][j]){
+	            j++;
+	        }else{
+	            return true;
+	        }
+	    }
+	 
+	    return false;
 	}
 	
 	public void printMatrix() {
