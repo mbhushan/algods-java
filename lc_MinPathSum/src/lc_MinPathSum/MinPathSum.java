@@ -8,6 +8,31 @@ package lc_MinPathSum;
  */
 public class MinPathSum {
 	
+	public int minPathSumRec(int[][] grid) {
+	    return dfs(0,0,grid);
+	}
+	 
+	public int dfs(int i, int j, int[][] grid){
+	    if(i==grid.length-1 && j==grid[0].length-1){
+	        return grid[i][j];
+	    }
+	 
+	    if(i<grid.length-1 && j<grid[0].length-1){
+	        int r1 = grid[i][j] + dfs(i+1, j, grid);
+	        int r2 = grid[i][j] + dfs(i, j+1, grid);
+	        return Math.min(r1,r2);
+	    }
+	 
+	    if(i<grid.length-1){
+	        return grid[i][j] + dfs(i+1, j, grid);
+	    }
+	 
+	    if(j<grid[0].length-1){
+	        return grid[i][j] + dfs(i, j+1, grid);
+	    }
+	 
+	    return 0;
+	}
 	
 	
 	public int minPathSum(int[][] grid) {
