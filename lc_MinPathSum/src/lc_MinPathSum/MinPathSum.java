@@ -9,6 +9,16 @@ import java.io.InputStreamReader;
  * find a path from top left to bottom right which minimizes the sum of all numbers along its path.
  * @author manib
  *
+ *Input/Output:
+3
+4
+1 3 5 7
+10 11 16 20
+23 30 34 50
+1 3 5 7 
+10 11 16 20 
+23 30 34 50 
+min path sum: 86
  */
 public class MinPathSum {
 	
