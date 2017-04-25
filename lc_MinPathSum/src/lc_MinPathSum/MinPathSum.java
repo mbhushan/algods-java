@@ -32,6 +32,7 @@ public class MinPathSum {
 		mps.printMatrix();
 		
 		System.out.println("min path sum: " + mps.minPathSum(matrix));
+		System.out.println("min path sum: " + mps.minPathSumRec(matrix));
 		
 	}
 	
@@ -124,8 +125,6 @@ public class MinPathSum {
 	            }
 	        }
 	    }
-	 
 	    return dp[m-1][n-1];
 	}
-
 }
