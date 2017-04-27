@@ -10,5 +10,20 @@ How many possible unique paths are there?
  *
  */
 public class UniquePaths {
+	
+	
+	public static void main(String [] args) {
+		
+	}
+	
+	public int uniquePaths(int row, int col) {
+		if (row == 0 || col == 0) {
+			return 0;
+		}
+		int [][] dp = new int[row][col];
+		
+		
+		return dp[row-1][col-1];
+	}
 
 }
