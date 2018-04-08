@@ -45,3 +45,11 @@ public class FlipGame {
         return result;
     }
 }
+/**
+ * ******** OUTPUT ************
+
+ --++
+ +--+
+ ++--
+
+ */
