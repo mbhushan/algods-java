@@ -17,7 +17,25 @@ public class BinaryTree {
         bt.inorder();
         System.out.println();
         System.out.println("min value: " + bt.minValue());
+        System.out.println("max value: " + bt.maxValue());
 
+    }
+
+    public Integer maxValue() {
+        return maxValue(this.root);
+    }
+
+    private Integer maxValue(Node node) {
+
+        int maxValue = Integer.MIN_VALUE;
+        while (node != null) {
+            if (node.data > maxValue) {
+                maxValue = node.data;
+            }
+            node = node.right;
+        }
+
+        return maxValue;
     }
 
     public Integer minValue() {
