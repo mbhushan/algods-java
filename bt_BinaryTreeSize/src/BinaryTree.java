@@ -18,7 +18,22 @@ public class BinaryTree {
         bt.buildBST(A);
         bt.inorder();
         System.out.println("Size of binary tree: " + bt.btSize());
+        System.out.println("Max depth of the binary tree: " + bt.maxDepth());
 
+    }
+
+    public int maxDepth() {
+        return maxDepth(this.root);
+    }
+
+    private int maxDepth(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        int leftDepth = maxDepth(node.left);
+        int rightDepth = maxDepth(node.right);
+
+        return Math.max(leftDepth, rightDepth) + 1;
     }
 
     public int btSize() {
