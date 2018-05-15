@@ -1,5 +1,10 @@
 /**
  * Created by manib on 5/13/18.
+
+        8
+     3      10
+  1     6       14
+      4   7  13
  */
 public class BinaryTree {
 
@@ -18,6 +23,13 @@ public class BinaryTree {
         System.out.println();
         System.out.println("min value: " + bt.minValue());
         System.out.println("max value: " + bt.maxValue());
+
+        System.out.println("preorder traversal: ");
+        bt.preorder();
+        System.out.println();
+        System.out.println("postorder traversal: ");
+        bt.postorder();
+        System.out.println();
 
     }
 
@@ -53,6 +65,43 @@ public class BinaryTree {
         }
 
         return minValue;
+    }
+
+
+    public void postorder() {
+        postorder(this.root);
+    }
+
+    private void postorder(Node node) {
+        if (node == null) {
+            return ;
+        }
+
+        if (node.left != null) {
+            postorder(node.left);
+        }
+        if (node.right != null) {
+            postorder(node.right);
+        }
+        System.out.print(node.data + " ");
+    }
+
+    public void preorder() {
+        preorder(this.root);
+    }
+
+    private void preorder(Node node) {
+        if (node == null) {
+            return ;
+        }
+        System.out.print(node.data + " ");
+
+        if (node.left != null) {
+            preorder(node.left);
+        }
+        if (node.right != null) {
+            preorder(node.right);
+        }
     }
 
     public void inorder() {
