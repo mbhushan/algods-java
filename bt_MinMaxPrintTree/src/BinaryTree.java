@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * Created by manib on 5/13/18.
 
@@ -30,7 +32,26 @@ public class BinaryTree {
         System.out.println("postorder traversal: ");
         bt.postorder();
         System.out.println();
+        System.out.println("binary tree inorder traversal: ");
+        bt.inroder_iterative();
+        System.out.println();
 
+    }
+
+    public void inroder_iterative() {
+        Node node = this.root;
+        Stack<Node> stack = new Stack<Node>();
+        while (node != null || !stack.isEmpty()) {
+            if (node == null) {
+                node = stack.pop();
+                System.out.print(node.data + " ");
+                node = node.right;
+            }
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
     }
 
     public Integer maxValue() {
