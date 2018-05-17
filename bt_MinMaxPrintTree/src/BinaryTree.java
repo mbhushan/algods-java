@@ -35,7 +35,41 @@ public class BinaryTree {
         System.out.println("binary tree inorder traversal: ");
         bt.inroder_iterative();
         System.out.println();
+        System.out.println("binary tree preorder traversal: ");
+        bt.preorder_iterative();
+        System.out.println();
 
+    }
+
+    public void postorder_iterative() {
+        Node node = this.root;
+        Stack<Node> stack = new Stack<Node>();
+
+        while (node != null || !stack.isEmpty()) {
+            if (node == null) {
+
+            }
+
+            if (node != null) {
+
+            }
+        }
+    }
+
+    public void preorder_iterative() {
+        Node node = this.root;
+        Stack<Node> stack = new Stack<Node>();
+
+        while (node != null || !stack.isEmpty()) {
+            if (node == null) {
+                node = stack.pop();
+            }
+            System.out.print(node.data + " ");
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            node = node.left;
+        }
     }
 
     public void inroder_iterative() {
