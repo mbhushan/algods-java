@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -41,10 +43,63 @@ public class BinaryTree {
         System.out.println("binary tree postorder traversal: ");
         bt.postorder_iterative();
         System.out.println();
+        System.out.println("binary tree level order (no new line): ");
+        bt.level_order_no_newline();
+        System.out.println();
+        System.out.println("binary tree level order with new line: ");
+        bt.level_order_newline();
+        System.out.println();
 
     }
 
-    
+    public void level_order_newline() {
+        if (this.root == null) {
+            return;
+        }
+        Node node = this.root;
+        Node marker = new Node(null);
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        queue.add(marker);
+
+        while (!queue.isEmpty()) {
+            node = queue.remove();
+            if (node.equals(marker)) {
+                System.out.println();
+                if (!queue.isEmpty()) {
+                    queue.add(marker);
+                }
+            } else {
+                System.out.print(node.data + " ");
+            }
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+    }
+
+    public void level_order_no_newline() {
+        Queue<Node> queue = new LinkedList<>();
+        Node node = this.root;
+        if (node == null) {
+            return;
+        }
+        queue.add(node);
+        while (!queue.isEmpty()) {
+            node = queue.remove();
+            System.out.print(node.data + " ");
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+    }
 
     public void postorder_iterative() {
         Node node = this.root;
@@ -209,13 +264,26 @@ public class BinaryTree {
 }
 
 class Node {
-    int data;
+    Integer data;
     Node left;
     Node right;
 
-    public Node(int data) {
+    public Node(Integer data) {
         this.data = data;
         this.left = null;
         this.right = null;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Node)) {
+            return false;
+        }
+        Node node = (Node) obj;
+
+        return super.equals(obj);
     }
 }
