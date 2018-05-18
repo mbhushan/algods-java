@@ -1,5 +1,3 @@
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -40,29 +38,32 @@ public class BinaryTree {
         System.out.println("binary tree preorder traversal: ");
         bt.preorder_iterative();
         System.out.println();
+        System.out.println("binary tree postorder traversal: ");
+        bt.postorder_iterative();
+        System.out.println();
 
     }
 
+    
+
     public void postorder_iterative() {
         Node node = this.root;
-        Stack<Node> stack = new Stack<Node>();
-
-            Deque<Node> stack1 = new LinkedList<>();
-            Deque<Node> stack2 = new LinkedList<Node>();
-            stack1.addFirst(node);
-            while(!stack1.isEmpty()){
-                node = stack1.pollFirst();
-                if(node.left != null){
-                    stack1.addFirst(node.left);
-                }
-                if(node.right != null){
-                    stack1.addFirst(node.right);
-                }
-                stack2.addFirst(node);
+        Stack<Node> stack1 = new Stack<>();
+        Stack<Node> stack2 = new Stack<Node>();
+        stack1.push(node);
+        while (!stack1.isEmpty()) {
+            node = stack1.pop();
+            if (node.left != null) {
+                stack1.push(node.left);
             }
-            while(!stack2.isEmpty()){
-                System.out.print(stack2.pollFirst().data + " ");
+            if (node.right != null) {
+                stack1.push(node.right);
             }
+            stack2.push(node);
+        }
+        while (!stack2.isEmpty()) {
+            System.out.print(stack2.pop().data + " ");
+        }
     }
 
     public void preorder_iterative() {
