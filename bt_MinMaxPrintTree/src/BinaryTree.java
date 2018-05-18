@@ -1,3 +1,5 @@
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -45,15 +47,22 @@ public class BinaryTree {
         Node node = this.root;
         Stack<Node> stack = new Stack<Node>();
 
-        while (node != null || !stack.isEmpty()) {
-            if (node == null) {
-
+            Deque<Node> stack1 = new LinkedList<>();
+            Deque<Node> stack2 = new LinkedList<Node>();
+            stack1.addFirst(node);
+            while(!stack1.isEmpty()){
+                node = stack1.pollFirst();
+                if(node.left != null){
+                    stack1.addFirst(node.left);
+                }
+                if(node.right != null){
+                    stack1.addFirst(node.right);
+                }
+                stack2.addFirst(node);
             }
-
-            if (node != null) {
-
+            while(!stack2.isEmpty()){
+                System.out.print(stack2.pollFirst().data + " ");
             }
-        }
     }
 
     public void preorder_iterative() {
