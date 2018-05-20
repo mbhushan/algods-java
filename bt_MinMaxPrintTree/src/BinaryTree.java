@@ -46,7 +46,7 @@ public class BinaryTree {
         System.out.println("binary tree level order (no new line): ");
         bt.level_order_no_newline();
         System.out.println();
-        System.out.println("binary tree level order with new line: ");
+        System.out.println("binary tree level order with each level on new line: ");
         bt.level_order_newline();
         System.out.println();
 
