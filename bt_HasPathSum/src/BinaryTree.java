@@ -18,6 +18,24 @@ import java.util.Stack;
  8. printPaths()
  Given a binary tree, prints out all of its root-to-leaf
  paths, one per line. Uses a recursive helper to do the work.
+
+ 9. mirror() Solution (Java)
+
+ Changes the tree into its mirror image.
+ So the tree...
+     4
+    / \
+   2   5
+  / \
+ 1  3
+ is changed to...
+     4
+    / \
+   5  2
+  / \
+ 3   1
+ Uses a recursive helper that recurs over the tree,
+ swapping the left/right pointers.
  */
 public class BinaryTree {
 
@@ -38,6 +56,47 @@ public class BinaryTree {
 
         System.out.println("print root to leaf paths: ");
         bt.printPaths();
+        System.out.println("preorder iterative before mirror: ");
+        bt.preorder_iter();
+        System.out.println();
+        bt.mirrorBT();
+        System.out.println("preorder iterative after mirror: ");
+        bt.preorder_iter();
+        System.out.println();
+    }
+
+    public void mirrorBT() {
+        mirrorBT(this.root);
+    }
+
+    public void mirrorBT(Node node) {
+        if (node == null) {
+            return;
+        }
+        mirrorBT(node.left);
+        mirrorBT(node.right);
+        Node temp = node.left;
+        node.left = node.right;
+        node.right = temp;
+    }
+
+    public void preorder_iter() {
+        Node node = this.root;
+        if (node == null) {
+            return;
+        }
+        Stack<Node> stack = new Stack<>();
+
+        while(node != null || !stack.isEmpty()) {
+            if (node == null) {
+                node = stack.pop();
+            }
+            System.out.print(node.data + " ");
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            node = node.left;
+        }
     }
 
     public void printPaths() {
