@@ -14,6 +14,10 @@ import java.util.Stack;
  equals the given sum.
  Strategy: subtract the node value from the sum when recurring down,
  and check to see if the sum is 0 when you run out of tree.
+
+ 8. printPaths()
+ Given a binary tree, prints out all of its root-to-leaf
+ paths, one per line. Uses a recursive helper to do the work.
  */
 public class BinaryTree {
 
@@ -31,6 +35,35 @@ public class BinaryTree {
         for (int i=0; i<targetSum.length; i++) {
             System.out.println("has path sum " + targetSum[i] + "? " + bt.hasPathSum(targetSum[i]));
         }
+
+        System.out.println("print root to leaf paths: ");
+        bt.printPaths();
+    }
+
+    public void printPaths() {
+        int [] paths = new int[100];
+        printPaths(this.root, paths, 0);
+    }
+
+    public void printPaths(Node node, int [] paths, int len) {
+        if (node == null) {
+            return;
+        }
+        paths[len++] = node.data;
+
+        if (node.left == null && node.right == null) {
+            printPathData(paths, len);
+        } else {
+            printPaths(node.left, paths, len);
+            printPaths(node.right, paths, len);
+        }
+    }
+
+    public void printPathData(int [] paths, int len) {
+        for (int i=0; i<len; i++) {
+            System.out.print(paths[i] + " ");
+        }
+        System.out.println();
     }
 
     public boolean hasPathSum(int sum) {
