@@ -10,24 +10,39 @@
  */
 public class BinaryTree {
 
-    private Node root;
+    private Node root1;
+    private Node root2;
+    private Node root3;
 
     public BinaryTree() {
-        this.root = null;
+        this.root1 = null;
+        this.root2 = null;
+        this.root3 = null;
     }
 
     public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
 
+
     }
 
-    public void buildBST(int [] A) {
+    public void buildBST() {
+        int [] A = {8, 3, 10, 1, 6, 14, 4, 7, 13 };
+        int [] B = {8, 3, 10, 1, 6, 14, 4, 7, 13 };
+        int [] C = {8, 3, 10, 1, 6, 14, 4, 7, 23 };
+
+        buildBST(this.root1, A);
+        buildBST(this.root2, B);
+        buildBST(this.root3, C);
+    }
+
+    public void buildBST(Node root, int [] A) {
         if (A == null || A.length < 1) {
             return;
         }
 
         for (int i=0; i<A.length; i++) {
-            this.root = insertBST(this.root, A[i]);
+            root = insertBST(root, A[i]);
         }
     }
 
