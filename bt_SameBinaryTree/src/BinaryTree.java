@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
 
          8
@@ -25,6 +27,24 @@ public class BinaryTree {
 
 
     }
+
+   public void inorder(Node node) {
+        Stack<Node> stack = new Stack<>();
+
+        while (node != null || !stack.isEmpty()) {
+            if (node == null) {
+                node = stack.pop();
+                System.out.print(node.data + " ");
+                node = node.right;
+            }
+
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
+
+   }
 
     public void buildBST() {
         int [] A = {8, 3, 10, 1, 6, 14, 4, 7, 13 };
