@@ -25,6 +25,21 @@ public class BinaryTree {
     public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
 
+        bt.buildBST();
+        bt.inorder();
+
+    }
+
+    public void inorder() {
+        System.out.println("inorder traversal roo1: ");
+        inorder(this.root1);
+        System.out.println();
+        System.out.println("inorder traversal root2: ");
+        inorder(this.root2);
+        System.out.println();
+        System.out.println("inorder traversal root3: ");
+        inorder(this.root3);
+        System.out.println();
 
     }
 
@@ -51,19 +66,21 @@ public class BinaryTree {
         int [] B = {8, 3, 10, 1, 6, 14, 4, 7, 13 };
         int [] C = {8, 3, 10, 1, 6, 14, 4, 7, 23 };
 
-        buildBST(this.root1, A);
-        buildBST(this.root2, B);
-        buildBST(this.root3, C);
+        this.root1 = buildBST(this.root1, A);
+        this.root2 = buildBST(this.root2, B);
+        this.root3 = buildBST(this.root3, C);
     }
 
-    public void buildBST(Node root, int [] A) {
+    public Node buildBST(Node root, int [] A) {
         if (A == null || A.length < 1) {
-            return;
+            return null;
         }
 
         for (int i=0; i<A.length; i++) {
             root = insertBST(root, A[i]);
         }
+
+        return root;
     }
 
     public Node insertBST(Node node, int value) {
