@@ -30,6 +30,14 @@ public class BinaryTree {
 
     }
 
+    public void sameTree() {
+
+    }
+
+    private boolean sameTree(Node node1, Node node2) {
+        return false;
+    }
+
     public void inorder() {
         System.out.println("inorder traversal roo1: ");
         inorder(this.root1);
