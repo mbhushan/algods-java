@@ -27,14 +27,33 @@ public class BinaryTree {
 
         bt.buildBST();
         bt.inorder();
+        //check if same tree
+        bt.sameTree();
 
     }
 
     public void sameTree() {
+        //check of root1 and root2 are same tree
+        boolean ans = sameTree(root1, root2);
+        System.out.println("root1 and root2 same tree? " + ans);
+
+        ans = sameTree(root2, root3);
+        System.out.println("root2 and root3 same tree? " + ans);
 
     }
 
     private boolean sameTree(Node node1, Node node2) {
+        //both empty - return true.
+        if (node1 == null && node2 == null) {
+            return true;
+        }
+
+        // both non empty - compare them
+        if (node1 != null && node2 != null) {
+            return ((node1.data == node2.data)
+                    && sameTree(node1.left, node2.left)
+                    && sameTree(node1.right, node2.right));
+        }
         return false;
     }
 
