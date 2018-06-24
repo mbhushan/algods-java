@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
 /**
  LCS Problem Statement: Given two sequences, find the length of longest subsequence present in both of them.
  A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
@@ -12,6 +16,31 @@
  ========================
  INPUT / OUTPUT
  ========================
+ S1: abcdaf
+ S2: acbcf
+ 0 0 0 0 0 0
+ 0 1 1 1 1 1
+ 0 1 1 2 2 2
+ 0 1 2 2 3 3
+ 0 1 2 2 3 3
+ 0 1 2 2 3 3
+ 0 1 2 2 3 4
+ max subsequence length: 4
+ indices: [5, 2, 1, 0]
+ longest subsequence: a b c f
+
+ S1: AGGTAB
+ S2: GXTXAYB
+ 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 1 1 1
+ 0 1 1 1 1 1 1 1
+ 0 1 1 1 1 1 1 1
+ 0 1 1 2 2 2 2 2
+ 0 1 1 2 2 3 3 3
+ 0 1 1 2 2 3 3 4
+ max subsequence length: 4
+ indices: [5, 4, 3, 1]
+ longest subsequence: G T A B
 
  */
 
@@ -19,11 +48,12 @@ public class LongestCommonSubsequence {
 
     public static void main(String [] args) {
         LongestCommonSubsequence obj = new LongestCommonSubsequence();
-        String [] S1 = {"abcdaf"};
-        String [] S2 = {"acbcf"};
+        String [] S1 = {"abcdaf", "AGGTAB"};
+        String [] S2 = {"acbcf", "GXTXAYB"};
 
         for (int i=0; i<S1.length; i++) {
             obj.generateLCS(S1[i], S2[i]);
+            System.out.println();
         }
 
     }
@@ -35,6 +65,9 @@ public class LongestCommonSubsequence {
 
         char [] X = s1.toCharArray();
         char [] Y = s2.toCharArray();
+
+        System.out.println("S1: " + s1);
+        System.out.println("S2: " + s2);
 
         int [][] DP = new int[X.length+1][Y.length+1];
 
@@ -54,9 +87,35 @@ public class LongestCommonSubsequence {
         }
         printMatrix(DP);
         System.out.println("max subsequence length: " + DP[X.length][Y.length]);
+        findLongestSubsequence(DP, X);
     }
 
-    
+   public void findLongestSubsequence(int [][] M, char [] X) {
+        int row = M.length-1;
+        int col = M[0].length-1;
+        List<Integer> indices = new ArrayList<>();
+
+        while (row >= 1 && col >= 1) {
+            if (M[row][col] == M[row][col-1]) {
+                col = col-1;
+            } else if (M[row][col] == M[row-1][col]) {
+                row = row-1;
+            } else {
+                indices.add(row-1);
+                --row;
+                --col;
+            }
+        }
+        System.out.println("indices: " + indices.toString());
+       System.out.print("longest subsequence: ");
+       ListIterator<Integer> li = indices.listIterator(indices.size());
+       while (li.hasPrevious()) {
+           int index = li.previous();
+           //System.out.println("index: " + index);
+           System.out.print(X[index] + " ");
+       }
+       System.out.println();
+   }
 
     private void printMatrix(int [][] M) {
         if (M == null) {
