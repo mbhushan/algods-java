@@ -14,6 +14,23 @@ import java.util.List;
  decreasing order and keep adding the item until you have no
  capacity left.
 
+ =========================
+ INPUT / OUTPUT
+ =========================
+ weights: [1, 3, 4, 5]
+ values: [1, 4, 5, 7]
+ max value bag can have? 9
+ 0 0 0 0 0 0 0 0
+ 0 1 1 1 1 1 1 1
+ 0 1 1 4 5 5 5 5
+ 0 1 1 4 5 6 6 9
+ 0 1 1 4 5 7 8 9
+ ans: [2, 1]
+ weights : values
+ 4 : 5
+ 3 : 4
+
+
  */
 
 public class Knapsack {
