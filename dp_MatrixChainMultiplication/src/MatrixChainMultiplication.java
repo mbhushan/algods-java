@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  Given an array p[] which represents the chain of matrices such that the ith matrix Ai is of
  dimension p[i-1] x p[i]. We need to write a function MatrixChainOrder() that should return the minimum
@@ -22,6 +25,16 @@
  There are only two matrices of dimensions 10x20 and 20x30. So there
  is only one way to multiply the matrices, cost of which is 10*20*30
 
+ ============================
+ INPUT / OUTPUT
+ ============================
+ DP Matrix:
+ 0 0 36 84 124
+ 0 0 0 72 132
+ 0 0 0 0 120
+ 0 0 0 0 0
+ 0 0 0 0 0
+ min matrix chain multiplication cost: 124
  */
 
 public class MatrixChainMultiplication {
@@ -41,18 +54,25 @@ public class MatrixChainMultiplication {
 	       dimension of A[i] is p[i-1] x p[i] */
         int [][] T = new int[size][size];
         int value = 0;
+        List<Integer> result = new ArrayList<>();
         for (int len=2; len<size; len++) {
             for (int i=0; i<size-len; i++) {
                 int j = i + len;
                 T[i][j] = Integer.MAX_VALUE;
                 for (int k=i+1; k<j; k++) {
-                    T[i][j] = Math.min(T[i][j], T[i][k] + T[k][j] + M[i] * M[k] * M[j]);
+                    value = T[i][k] + T[k][j] + M[i] * M[k] * M[j];
+                    if (value < T[i][j]) {
+                        T[i][j] = value;
+                        result.add(k);
+                    }
+                    //T[i][j] = Math.min(T[i][j], T[i][k] + T[k][j] + M[i] * M[k] * M[j]);
                 }
             }
         }
 
         printDPMatrix(T);
         System.out.println("min matrix chain multiplication cost: " + T[0][size-1]);
+        System.out.println("indices are: " + result.toString());
     }
 
     private void printDPMatrix(int [][] T) {
