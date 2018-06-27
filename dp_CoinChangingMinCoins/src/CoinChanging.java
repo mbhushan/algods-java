@@ -6,6 +6,19 @@ import java.util.ListIterator;
  Given a total and coins of certain denomination with infinite supply,
  what is the minimum number of coins it takes to form this total V.
 
+ ====================
+ INPUT / OUTPUT
+ ====================
+ 0 X X X X X X X X X X X X X
+ 0 X 1 X 2 X 3 X 4 X 5 X 6 X
+ 0 X 1 1 2 2 2 3 3 3 4 4 4 5
+ 0 X 1 1 2 2 1 3 2 2 3 3 2 4
+ 0 X 1 1 2 2 1 1 2 2 2 3 2 2
+ min coins required: 2
+ result indices: [3, 2]
+ coints are:
+ 6 7
+
  */
 
 public class CoinChanging {
