@@ -6,6 +6,24 @@
  binary search tree from these keys such that cost of searching is minimum.
 
  ================================
+  INPUT / OUTPUT
+ ================================
+ DP Matrix:
+ 4 8 20 26
+ 0 2 10 16
+ 0 0 6 12
+ 0 0 0 3
+ Minimum cost of the binary search tree: 26
+ DP Parent Matrix:
+ 0 0 2 2
+ 0 0 2 2
+ 0 0 0 2
+ 0 0 0 0
+ printing tree roots:
+ start: 0; end: 3 ; 2
+ start: 0; end: 1 ; 0
+ start: 1; end: 1 ; 0
+ start: 3; end: 3 ; 0
 
  */
 
@@ -50,10 +68,22 @@ public class OptimalBST {
         System.out.println("Minimum cost of the binary search tree: " + T[0][size-1]);
         System.out.println("DP Parent Matrix: ");
         printDPMatrix(P);
+        System.out.println("printing tree roots: ");
+        printSolution(P, 0, size-1, P[0][size-1]);
     }
 
-    public void printSolution(int [][] P, int [] F) {
-
+    public void printSolution(int [][] P, int start, int end, int root) {
+        if (start == end) {
+            System.out.println("start: " + start + "; end: " + end + " ; " + root + " ");
+            return;
+        }
+        System.out.println("start: " + start + "; end: " + end + " ; " + root + " ");
+        if (root-1 >= 0) {
+            printSolution(P, start, root - 1, P[start][root - 1]);
+        }
+        if (root+1 < P.length) {
+            printSolution(P, root + 1, end, P[root + 1][end]);
+        }
     }
 
     public void printDPMatrix(int [][] M) {
