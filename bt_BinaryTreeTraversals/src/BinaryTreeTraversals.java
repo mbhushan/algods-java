@@ -1,8 +1,12 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -63,11 +67,55 @@ public class BinaryTreeTraversals {
         System.out.println();
         System.out.println("level order bottoms up: ");
         btt.levelOrderBottomsup();
+
+        System.out.println("vertical order of a binary tree: ");
+        btt.verticalOrder();
     }
 
-    public void levelOrder() {
-        levelOrder(this.root);
+    public void verticalOrder() {
+        Map<Integer, List<Node>> map = new HashMap<>();
+        int index = 0;
+        verticalOrder(this.root, map, index);
+
+        Set<Integer> keys = map.keySet();
+        List sortedList = new ArrayList(keys);
+        Collections.sort(sortedList);
+        Iterator<Integer> iter = sortedList.iterator();
+        while (iter.hasNext()) {
+            int i = iter.next();
+            List<Node> list = map.get(i);
+            Iterator<Node> it = list.iterator();
+            while (it.hasNext()) {
+                Node node = it.next();
+                System.out.print(node.data + " ");
+            }
+            System.out.println();
+        }
     }
+
+    private void verticalOrder(Node node, Map<Integer, List<Node>> map, int index) {
+
+        if (node == null) {
+            return;
+        }
+        List<Node> list = new ArrayList<>();
+        if (map.containsKey(index)) {
+             list = map.get(index);
+
+        }
+        list.add(node);
+        map.put(index, list);
+
+        if (node.left != null) {
+            verticalOrder(node.left, map, index-1);
+        }
+        if (node.right != null) {
+            verticalOrder(node.right, map, index+1);
+        }
+
+    }
+
+
 
     public void levelOrderBottomsup() {
         levelOrderBottomsup(this.root);
@@ -113,6 +161,10 @@ public class BinaryTreeTraversals {
             }
             System.out.println();
         }
+    }
+
+    public void levelOrder() {
+        levelOrder(this.root);
     }
 
     private void levelOrder(Node node) {
