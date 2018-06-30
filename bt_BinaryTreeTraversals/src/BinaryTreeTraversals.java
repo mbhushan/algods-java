@@ -40,6 +40,19 @@ import java.util.Stack;
  3 10
  1 6 14
  4 7 13
+
+ level order bottoms up:
+ 4 7 13
+ 1 6 14
+ 3 10
+ 8
+ vertical order of a binary tree:
+ 1
+ 3 4
+ 8 6
+ 7 10 13
+ 14
+
  */
 public class BinaryTreeTraversals {
 
