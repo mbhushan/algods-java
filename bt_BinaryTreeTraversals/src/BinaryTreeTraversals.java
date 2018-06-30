@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  Preorder,
  Inorder,
@@ -31,6 +33,25 @@ public class BinaryTreeTraversals {
     public void inorder() {
         System.out.println("inorder traversal recursive: ");
         inorder(this.root);
+        System.out.println();
+        System.out.println("inorder traversal itertive: ");
+        inorderIterative(this.root);
+    }
+
+    private void inorderIterative(Node node) {
+        Stack<Node> stack = new Stack<>();
+
+        while (node != null || !stack.isEmpty()) {
+            if (node == null) {
+                node = stack.pop();
+                System.out.print(node.data + " ");
+                node = node.right;
+            }
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
     }
 
     private void inorder(Node node) {
@@ -49,6 +70,27 @@ public class BinaryTreeTraversals {
     public void preorder() {
         System.out.println("preorder traversal recursive: ");
         preorder(this.root);
+        System.out.println();
+        System.out.println("preorder traversal iterative: ");
+        preorderIterative(this.root);
+    }
+
+    private void preorderIterative(Node node) {
+        Stack<Node> stack = new Stack<Node>();
+
+        while (node != null || !stack.isEmpty()) {
+            if (node == null) {
+                node = stack.pop();
+            }
+
+            if (node != null) {
+                System.out.print(node.data + " ");
+                if (node.right != null) {
+                    stack.push(node.right);
+                }
+                node = node.left;
+            }
+        }
     }
 
     private void preorder(Node node) {
