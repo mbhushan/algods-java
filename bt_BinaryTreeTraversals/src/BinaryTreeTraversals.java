@@ -48,15 +48,37 @@ public class BinaryTreeTraversals {
         System.out.println();
         btt.postorder();
 
+        System.out.println();
+        System.out.println("level order with new line on each level: ");
+        btt.levelOrder();
     }
 
     public void levelOrder() {
-        
+        levelOrder(this.root);
     }
 
     private void levelOrder(Node node) {
         Queue<Node> queue = new LinkedList<>();
         Node marker = new Node(null);
+        queue.add(node);
+        queue.add(marker);
+        while (!queue.isEmpty()) {
+            node = queue.remove();
+            if (node.equals(marker)) {
+                System.out.println();
+                if (!queue.isEmpty()) {
+                    queue.add(marker);
+                }
+            } else {
+                System.out.print(node.data + " ");
+            }
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
     }
 
     public void inorder() {
