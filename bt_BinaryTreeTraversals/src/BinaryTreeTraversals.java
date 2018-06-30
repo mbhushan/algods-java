@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -27,6 +30,12 @@ import java.util.Stack;
  1 4 7 6 3 13 14 10 8
  postorder traversal iterative (1 stack):
  1 4 7 6 3 13 14 10 8
+
+ level order with new line on each level:
+ 8
+ 3 10
+ 1 6 14
+ 4 7 13
  */
 public class BinaryTreeTraversals {
 
@@ -51,10 +60,59 @@ public class BinaryTreeTraversals {
         System.out.println();
         System.out.println("level order with new line on each level: ");
         btt.levelOrder();
+        System.out.println();
+        System.out.println("level order bottoms up: ");
+        btt.levelOrderBottomsup();
     }
 
     public void levelOrder() {
         levelOrder(this.root);
+    }
+
+    public void levelOrderBottomsup() {
+        levelOrderBottomsup(this.root);
+    }
+
+    //Given a binary tree, return the bottom-up level order traversal of its nodes' values.
+    private void levelOrderBottomsup(Node node) {
+
+        Queue<Node> queue = new LinkedList<>();
+        Node marker = new Node(null);
+        queue.add(node);
+        queue.add(marker);
+        List<Node> levelList = new ArrayList<>();
+        Stack<List<Node>> stack = new Stack<>();
+
+        while (!queue.isEmpty()) {
+            node = queue.remove();
+
+            if (node.equals(marker)) {
+                stack.push(levelList);
+                if (!queue.isEmpty()) {
+                    queue.add(marker);
+                }
+                levelList = new ArrayList<>();
+            } else {
+                levelList.add(node);
+            }
+
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            List<Node> list = stack.pop();
+            Iterator<Node> it = list.iterator();
+            while (it.hasNext()) {
+                node = it.next();
+                System.out.print(node.data + " ");
+            }
+            System.out.println();
+        }
     }
 
     private void levelOrder(Node node) {
@@ -193,6 +251,7 @@ public class BinaryTreeTraversals {
             }
         }
     }
+
 
     private void postorderIterative(Node node) {
         if (node == null) {
