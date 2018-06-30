@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -46,6 +48,15 @@ public class BinaryTreeTraversals {
         System.out.println();
         btt.postorder();
 
+    }
+
+    public void levelOrder() {
+        
+    }
+
+    private void levelOrder(Node node) {
+        Queue<Node> queue = new LinkedList<>();
+        Node marker = new Node(null);
     }
 
     public void inorder() {
@@ -229,11 +240,11 @@ public class BinaryTreeTraversals {
 }
 
 class Node {
-    int data;
+    Integer data;
     Node left;
     Node right;
 
-    Node(int data) {
+    Node(Integer data) {
         this.data = data;
         this.left = null;
         this.right = null;
