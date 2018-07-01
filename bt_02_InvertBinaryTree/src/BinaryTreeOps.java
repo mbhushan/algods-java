@@ -50,11 +50,45 @@ public class BinaryTreeOps {
         btt.inorder();
         System.out.println();
 
+        int k = 5;
+        btt.kSmallest(k);
+
         System.out.println("inverting binary tree: ");
         btt.invert();
 
         System.out.println("inorder after inverting: ");
         btt.inorder();
+
+
+    }
+
+    public void kSmallest(int k) {
+
+        int ans = kSmallest(this.root, k);
+        System.out.println(k + " smallest element: " + ans);
+    }
+
+    private Integer kSmallest(Node node, int k) {
+        Stack<Node> stack = new Stack<>();
+
+        while (node != null || !stack.isEmpty()) {
+            if (node == null) {
+                node = stack.pop();
+                --k;
+                if (k == 0) {
+                    return node.data;
+                }
+                node = node.right;
+            }
+
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
+
+        return null;
+
     }
 
     public void invert() {
