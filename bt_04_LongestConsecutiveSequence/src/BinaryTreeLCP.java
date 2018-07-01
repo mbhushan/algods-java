@@ -18,6 +18,8 @@ import java.util.Stack;
  1 3 4 6 7 8 9 10 13 14
  LCP: 3
  LCP size iteratively: 3
+ Check is binary tree is BST
+ is BST: true
  */
 
 
@@ -41,6 +43,29 @@ public class BinaryTreeLCP {
 
         btt.findLCP();
         btt.findLCPIterative();
+
+        System.out.println("Check is binary tree is BST ");
+        btt.isBST();
+    }
+
+    /**
+     * Given a binary tree, determine if it is a valid binary search tree (BST).
+     */
+    public void isBST(){
+        boolean ans = isBST(this.root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        System.out.println("is BST: " + ans);
+    }
+
+    private boolean isBST(Node node, int min, int max) {
+        if (node == null) {
+            return true;
+        }
+        if (node.data < min || node.data > max) {
+            return false;
+        }
+
+        return (isBST(node.left, min, node.data-1) && isBST(node.right, node.data+1, max));
+
     }
 
     public void findLCPIterative() {
