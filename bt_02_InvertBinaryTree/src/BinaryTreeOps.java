@@ -22,6 +22,12 @@ import java.util.Stack;
    7     2
   / \   / \
  9   6 3   1
+
+ inorder traversal itertive:
+ 1 3 4 6 7 8 10 13 14
+ inverting binary tree:
+ inorder after inverting:
+ 14 13 10 8 7 6 4 3 1
  */
 
 public class BinaryTreeOps {
