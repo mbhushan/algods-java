@@ -25,6 +25,7 @@ import java.util.Stack;
 
  inorder traversal itertive:
  1 3 4 6 7 8 10 13 14
+ 5 smallest element: 7
  inverting binary tree:
  inorder after inverting:
  14 13 10 8 7 6 4 3 1
@@ -62,6 +63,11 @@ public class BinaryTreeOps {
 
     }
 
+    /**
+     * Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+     * (1 ≤ k ≤ BST's total elements)
+     * @param k
+     */
     public void kSmallest(int k) {
 
         int ans = kSmallest(this.root, k);
