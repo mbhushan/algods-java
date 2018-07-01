@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -15,8 +17,7 @@ import java.util.Stack;
  inorder traversal itertive:
  1 3 4 6 7 8 9 10 13 14
  LCP: 3
-
-
+ LCP size iteratively: 3
  */
 
 
@@ -39,6 +40,41 @@ public class BinaryTreeLCP {
         System.out.println();
 
         btt.findLCP();
+        btt.findLCPIterative();
+    }
+
+    public void findLCPIterative() {
+        Node node = this.root;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        int lcpSize = 0;
+        int leftSize = 0;
+        int rightSize = 0;
+
+        while(!queue.isEmpty()) {
+            node = queue.remove();
+
+            if (node.left != null) {
+                queue.add(node.left);
+                if (node.data+1 == node.left.data) {
+                    leftSize += 1;
+                } else {
+                    leftSize = 1;
+                }
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+                if (node.data+1 == node.right.data) {
+                    rightSize += 1;
+                } else {
+                    rightSize = 1;
+                }
+            }
+            lcpSize = Math.max(lcpSize, Math.max(leftSize, rightSize));
+        }
+
+        System.out.println("LCP size iteratively: " + lcpSize);
     }
 
     public void findLCP() {
