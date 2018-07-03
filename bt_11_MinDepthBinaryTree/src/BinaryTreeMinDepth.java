@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -28,7 +30,36 @@ public class BinaryTreeMinDepth {
         bt.inorder();
         System.out.println();
 
+        bt.minDepth();
 
+
+    }
+
+    public void minDepth() {
+        List<Integer> list = new ArrayList<>(1);
+        list.add(Integer.MAX_VALUE);
+        minDepth(this.root, list, 1);
+
+        System.out.println("min depth: " + list.get(0));
+    }
+
+    private void minDepth(Node node, List<Integer> result, int depth) {
+        if (node == null) {
+            return;
+        }
+
+        if (node.left == null && node.right == null) {
+            int size = result.get(0);
+            if (depth < size) {
+                result.set(0, depth);
+            }
+            return;
+        }
+
+
+        minDepth(node.left, result, depth+1);
+        minDepth(node.right, result, depth+1);
+        --depth;
     }
 
     public void buildBST(int [] A) {
