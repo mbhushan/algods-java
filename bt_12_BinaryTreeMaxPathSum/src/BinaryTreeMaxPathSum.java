@@ -22,6 +22,23 @@ import java.util.Stack;
  7    2  5   1
 
  result is: 48
+
+ Example 3:
+       5
+      / \
+     10   8
+    /   / \
+   -21  13  4
+  /  \    / \
+ 7    2  6   1
+
+ result is: 36
+
+ inorder iterative:
+ 7 -21 2 10 5 13 8 6 4 1
+ max path sum: 36
+ max path sum leaf node to leaf node: 31
+
  */
 
 
@@ -43,6 +60,32 @@ public class BinaryTreeMaxPathSum {
         System.out.println();
 
         bt.findMaxPathSum();
+        bt.findMaxPathSumLeafToLeaf();
+    }
+
+    public void findMaxPathSumLeafToLeaf() {
+        int [] max = new int[1];
+        max[0] = Integer.MIN_VALUE;
+
+        findMaxPathSumLeafToLeaf(this.root, max);
+        System.out.println("max path sum leaf node to leaf node: " + max[0]);
+    }
+
+    private int findMaxPathSumLeafToLeaf(Node node, int [] max) {
+        if (node == null) {
+            return 0;
+        }
+
+        int left = findMaxPathSumLeafToLeaf(node.left, max);
+        int right = findMaxPathSumLeafToLeaf(node.right, max);
+
+        if (node.left != null && node.right != null) {
+            max[0] = Math.max(node.data + left + right, max[0]);
+
+            return Math.max(left, right) + node.data;
+        }
+
+        return node.left == null ? right + node.data : left + node.data;
     }
 
     public void findMaxPathSum() {
@@ -91,17 +134,17 @@ public class BinaryTreeMaxPathSum {
 
     public void buildBT() {
         this.root = new Node(5);
-        this.root.left = new Node(4);
+        this.root.left = new Node(10);
         this.root.right = new Node(8);
 
-        this.root.left.left = new Node(11);
+        this.root.left.left = new Node(-21);
         this.root.right.left = new Node(13);
         this.root.right.right = new Node(4);
 
         this.root.left.left.left = new Node(7);
         this.root.left.left.right = new Node(2);
 
-        this.root.right.right.left = new Node(5);
+        this.root.right.right.left = new Node(6);
         this.root.right.right.right = new Node(1);
 
     }
