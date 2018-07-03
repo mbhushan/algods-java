@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -23,7 +25,8 @@ public class BinaryTreeMinDepth {
         BinaryTreeMinDepth bt = new BinaryTreeMinDepth();
 
         // https://en.wikipedia.org/wiki/Binary_search_tree#/media/File:Binary_search_tree.svg
-        int[] A = {8, 3, 10, 1, 6, 14, 4, 7, 13};
+        //int[] A = {8, 3, 10, 1, 6, 14, 4, 7, 13};
+        int [] A = {30, 9, 200, 150, 700};
         bt.buildBST(A);
 
         System.out.println("inorder traversal itertive: ");
@@ -32,6 +35,91 @@ public class BinaryTreeMinDepth {
 
         bt.minDepth();
 
+        System.out.println("");
+        bt.minDepth1();
+        //System.out.println("min depth iterative: ");
+        bt.minDepthIterative();
+
+        bt.minDepth2();
+
+
+    }
+
+    public void minDepth2() {
+        int depth = minDepth2(this.root);
+        System.out.println("min depth2: " + depth);
+    }
+
+    private int minDepth2(Node node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int ldepth = minDepth2(node.left);
+        int rdepth = minDepth2(node.right);
+
+        return Math.min(ldepth, rdepth)+1;
+    }
+
+    public void minDepthIterative() {
+        Node node = this.root;
+        Queue<Node> queue = new LinkedList<>();
+        Node marker = new Node(null);
+
+        queue.add(node);
+        queue.add(marker);
+        int depth = 0;
+        while (!queue.isEmpty()) {
+            node = queue.remove();
+
+            if (node.equals(marker)) {
+                ++depth;
+                if (!queue.isEmpty()) {
+                    queue.add(marker);
+                }
+            }
+
+            if (node.left == null && node.right == null) {
+                break;
+            }
+
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+
+        System.out.println("min depth iterative: " + (depth+1));
+
+    }
+
+    public void minDepth1() {
+        int depth = minDepth1(this.root);
+        System.out.println("mindepth1 sol: " + depth);
+    }
+
+    public int minDepth1(Node node) {
+        if (node == null) {
+            return 0;
+        }
+
+        if (node.left == null && node.right == null) {
+            return 1;
+        }
+        int ldepth = 1;
+        int rdepth = 1;
+        if (node.left != null) {
+            ldepth = minDepth1(node.left);
+        }
+
+        if (node.right != null) {
+            rdepth = minDepth1(node.right);
+        }
+
+        return Math.min(ldepth, rdepth)+1;
 
     }
 
