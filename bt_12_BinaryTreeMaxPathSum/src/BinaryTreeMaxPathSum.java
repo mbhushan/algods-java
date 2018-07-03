@@ -21,7 +21,7 @@ import java.util.Stack;
   /  \    / \
  7    2  5   1
 
- result is: 43
+ result is: 48
  */
 
 
@@ -46,8 +46,10 @@ public class BinaryTreeMaxPathSum {
     }
 
     public void findMaxPathSum() {
-        int maxSum = findMaxPathSum(this.root, new int[1]);
-        System.out.println("max path sum: " + maxSum);
+        int [] max = new int[1];
+        max[0] = Integer.MIN_VALUE;
+        findMaxPathSum(this.root, max);
+        System.out.println("max path sum: " + max[0]);
     }
 
     private int findMaxPathSum(Node node, int [] max) {
