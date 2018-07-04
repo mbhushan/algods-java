@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -13,6 +17,16 @@ import java.util.Stack;
  5             <---
 
  You can see [1, 3, 5].
+
+ =======================
+ INPUT / OUTPUT
+ =======================
+ inorder traversal:
+ 1 3 4 6 7 8 10 13 14
+ right view of the binary tree:
+ 8 10 14 13
+ Left view of the binary tree:
+ 8 3 1 4
  */
 
 public class BinaryTreeView {
@@ -26,6 +40,7 @@ public class BinaryTreeView {
     public static void main(String[] args) {
         BinaryTreeView bst = new BinaryTreeView();
 
+        // https://en.wikipedia.org/wiki/Binary_search_tree#/media/File:Binary_search_tree.svg
         int [] A = {8, 3, 10, 1, 6, 14, 4, 7, 13};
 
         bst.buildBST(A);
@@ -33,8 +48,87 @@ public class BinaryTreeView {
         System.out.println("inorder traversal: ");
         bst.inorder();
         System.out.println();
+        bst.rightView();
+        bst.leftView();
 
     }
+
+    public void leftView() {
+        Node node = this.root;
+        Queue<Node> queue = new LinkedList<>();
+        Node marker = new Node(null);
+
+        queue.add(node);
+        queue.add(marker);
+        List<Node> leftView = new ArrayList<>();
+        leftView.add(node);
+
+        while (!queue.isEmpty()) {
+            node = queue.remove();
+
+            if (node.equals(marker)) {
+                if (!queue.isEmpty()) {
+                    leftView.add(queue.peek());
+                    queue.add(marker);
+                }
+            }
+
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+
+        System.out.println("Left view of the binary tree: ");
+        for (Node n: leftView) {
+            System.out.print(n.data + " ");
+        }
+
+        System.out.println();
+    }
+
+    public void rightView() {
+        Node node = this.root;
+        Queue<Node> queue = new LinkedList<>();
+        Node marker = new Node(null);
+
+        queue.add(node);
+        queue.add(marker);
+        List<Node> rightView = new ArrayList<>();
+
+        while (!queue.isEmpty()) {
+            node = queue.remove();
+
+            if (!queue.isEmpty() && queue.peek().equals(marker)) {
+                rightView.add(node);
+            }
+            if (node.equals(marker)) {
+                if (!queue.isEmpty()) {
+                    queue.add(marker);
+                }
+            }
+
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+
+        System.out.println("right view of the binary tree: ");
+        for (Node n: rightView) {
+            System.out.print(n.data + " ");
+        }
+
+        System.out.println();
+    }
+
+
 
     public void inorder() {
         inorder(this.root);
