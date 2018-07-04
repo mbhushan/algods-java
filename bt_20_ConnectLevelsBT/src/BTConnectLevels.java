@@ -42,6 +42,25 @@ import java.util.Stack;
      1    6    14
         /  \   /
        4   7  13
+
+ Example Binary Tree:
+          1
+      /      \
+     2        3
+    / \      /  \
+   4   5    6    7
+  / \           / \
+ 8   9        10   11
+
+ ===================
+ INPUT / OUTPUT
+ ===================
+ inorder traversal:
+ 1 3 4 6 7 8 10 13 14 connecting levels
+ print levels
+ 8 -> null
+ 3 -> 10 -> null
+ 1 -> 6 -> 14 -> null
  */
 
 public class BTConnectLevels {
