@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 /**
@@ -18,17 +16,40 @@ import java.util.Stack;
   / \    /  \
  2   6  30  41
 
+       15
+      / \
+     9   28
+    /   / \
+   6  20  34
+  / \    /  \
+ 2   5  30  41
+
  ===================
  INPUT / OUTPUT
  ===================
+ inorder traversal of broken BST:
+ 2 20 6 9 15 5 28 30 34 41
+ swapped nodes are:
+ 20 and 5
+ fixed binary search tree:
+ 2 5 6 9 15 20 28 30 34 41
+
+ inorder traversal of broken BST:
+ 2 6 5 9 15 20 28 30 34 41
+ swapped nodes are:
+ 6 and 5
+ fixed binary search tree:
+ 2 5 6 9 15 20 28 30 34 41
  */
 
 public class BSTRecover {
 
     private Node root;
+    private Node root2;
 
     BSTRecover() {
         this.root = null;
+        this.root2 = null;
     }
 
     public static void main(String [] args) {
@@ -36,21 +57,29 @@ public class BSTRecover {
         BSTRecover bt = new BSTRecover();
         bt.buildBT();
 
-        System.out.println("inorder iterative: ");
-        bt.inorder();
+        System.out.println("inorder traversal of broken BST: ");
+        bt.inorder1();
         System.out.println();
+        System.out.println();
+
+        bt.buildBT2();
+        System.out.println("inorder traversal of broken BST: ");
+        bt.inorder2();
     }
 
-    public void inorder() {
+    public void inorder1() {
         inorderIterative(this.root);
+    }
+
+    public void inorder2() {
+        inorderIterative(this.root2);
     }
 
     private void inorderIterative(Node node) {
         Stack<Node> stack = new Stack<>();
-        List<Node> swappedNodes = new ArrayList<>();
+        Node oldNode = node;
         Node first = null;
         Node second = null;
-
         Node prev = null;
 
         while (node != null || !stack.isEmpty()) {
@@ -64,6 +93,7 @@ public class BSTRecover {
                 if (prev != null && prev.data > node.data) {
                    if (first == null) {
                        first = prev;
+                       second = node;
                    } else {
                        second = node;
                    }
@@ -73,15 +103,24 @@ public class BSTRecover {
             }
         }
 
+        System.out.println();
         System.out.println("swapped nodes are: ");
-        System.out.println(first.data + " and " + second.data);
+        if (first == null) {
+            System.out.println("No swapped nodes found!");
+        } else {
+            System.out.println(first.data + " and " + second.data);
+            int buff = first.data;
+            first.data = second.data;
+            second.data = buff;
+        }
 
-        int buff = first.data;
-        first.data = second.data;
-        second.data = buff;
-
-        inorderRec(this.root);
+        System.out.println("fixed binary search tree: ");
+        inorderRec(oldNode);
     }
+
+//    public void inorderRec() {
+//        inorderRec(this.root2);
+//    }
 
     private void inorderRec(Node node) {
         if (node == null) {
@@ -113,6 +152,23 @@ public class BSTRecover {
 
         this.root.right.right.left = new Node(30);
         this.root.right.right.right = new Node(41);
+
+    }
+
+    public void buildBT2() {
+        this.root2 = new Node(15);
+        this.root2.left = new Node(9);
+        this.root2.right = new Node(28);
+
+        this.root2.left.left = new Node(6);
+        this.root2.right.left = new Node(20);
+        this.root2.right.right = new Node(34);
+
+        this.root2.left.left.left = new Node(2);
+        this.root2.left.left.right = new Node(5);
+
+        this.root2.right.right.left = new Node(30);
+        this.root2.right.right.right = new Node(41);
 
     }
 }
