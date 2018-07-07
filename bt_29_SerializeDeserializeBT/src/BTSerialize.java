@@ -24,8 +24,11 @@ public class BTSerialize {
 
     private Node root;
 
+    private Node preorderRoot;
+
     BTSerialize() {
         this.root = null;
+        this.preorderRoot = null;
     }
 
     public static void main(String[] args) {
@@ -39,12 +42,57 @@ public class BTSerialize {
         System.out.println();
 
         System.out.println("Preorder serialization: ");
-        bt.serializePreorder();
+        List<String> preorder = bt.serializePreorder();
 
-        System.out.println("Inorder serialization: ");
-        bt.serializeInorder();
+//        System.out.println("Inorder serialization: ");
+//        bt.serializeInorder();
+
+        bt.deserialize(preorder);
 
     }
+
+    public void deserialize(List<String> preorder) {
+        if (preorder.isEmpty()) {
+            return;
+        }
+        this.preorderRoot = new Node(Integer.parseInt(preorder.get(0)));
+        Node node = this.preorderRoot;
+        Stack<Node> stack = new Stack<>();
+        stack.push(node);
+        int size = preorder.size();
+        int index = 1;
+        while (index < size) {
+            String s = preorder.get(index);
+            if (!s.equals("#")) {
+                while (!stack.isEmpty() && stack.peek().left != null && stack.peek().right != null) {
+                    stack.pop();
+                    node = stack.peek();
+                }
+                if (stack.peek().left == null) {
+                    node.left = new Node(Integer.parseInt(s));
+                    node = node.left;
+                    stack.push(node);
+
+                } else  {
+                    node.right = new Node(Integer.parseInt(s));
+                    node = node.right;
+                    stack.push(node);
+                }
+            } else {
+                if (preorder.get(index-1).equals("#")) {
+                    stack.pop();
+                    node = stack.peek();
+                }
+            }
+            ++index;
+        }
+
+        System.out.println("inorder traversal after deserialization: ");
+        inorderIterative(this.preorderRoot);
+
+    }
+
+
 
     public void serializeInorder() {
         List<String> buff = new ArrayList<>();
@@ -73,11 +121,13 @@ public class BTSerialize {
         }
     }
 
-    public void serializePreorder() {
+    public List<String> serializePreorder() {
         List<String> buff = new ArrayList<>();
         serializePreorder(this.root, buff);
 
         System.out.println(buff.toString());
+
+        return buff;
     }
 
     private void serializePreorder(Node node, List<String> buff) {
