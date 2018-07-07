@@ -12,6 +12,28 @@ import java.util.Stack;
      1    6         14
          /  \      /
         4   7    13
+
+ ======================
+ INPUT / OUTPUT
+ =======================
+ inorder traversal itertive:
+ 1 3 4 6 7 8 10 13 14
+ successor of 1: 3
+ successor of 3: 4
+ successor of 8: 10
+ successor of 13: 14
+ successor NOT found for 14
+ successor of 10: 13
+ successor of 6: 7
+
+ Predecessor does NOT exist for 1
+ predecessor of 3: 1
+ predecessor of 8: 7
+ predecessor of 13: 10
+ predecessor of 14: 13
+ predecessor of 10: 8
+ predecessor of 6: 4
+
  */
 public class BSTInorder {
 
@@ -26,15 +48,53 @@ public class BSTInorder {
         bt.inorder();
         System.out.println();
 
-        int [] values = {1, 3, 8, 13, 14, 10};
+        int [] values = {1, 3, 8, 13, 14, 10, 6};
 
         for (int i=0; i<values.length; i++) {
             bt.inorderSuccessor(values[i]);
         }
+
+        System.out.println();
+        for (int i=0; i<values.length; i++) {
+            bt.inorderPredecessor(values[i]);
+        }
+    }
+
+    public void inorderPredecessor(int n) {
+        inorderPredecessor(this.root, n);
+    }
+
+    private void inorderPredecessor(Node node, int n) {
+        boolean found = false;
+        Node ptr = null;
+        while (node != null) {
+            if (n < node.data) {
+                node = node.left;
+            } else if (n > node.data) {
+                ptr = node;
+                node = node.right;
+            } else if (n == node.data){
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            if (node.left == null && ptr == null) {
+                System.out.println("Predecessor does NOT exist for " + n);
+            } else if (node.left == null && ptr != null) {
+                System.out.println("predecessor of " + n + ": " + ptr.data);
+            } else {
+                node = node.left;
+                while (node.right != null) {
+                    node = node.right;
+                }
+                System.out.println("predecessor of " + n + ": " + node.data);
+            }
+        }
     }
 
     public void inorderSuccessor(int n) {
-        Node node = this.root;
         inorderSuccessor(this.root, n);
     }
 
