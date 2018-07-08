@@ -34,7 +34,7 @@
      /  \
    45    70
         /  \
-       65    80
+       65  80
  */
 
 public class BSTLargest {
@@ -52,15 +52,56 @@ public class BSTLargest {
         BSTLargest bst = new BSTLargest();
 
         bst.buildT1();
+        System.out.println("inorder traversal: ");
         bst.inorder();
+        System.out.println();
+        bst.findLargestBST();
     }
 
     public void findLargestBST() {
 
+        Result result = new Result();
+
+        Node [] buff = new Node[1];
+        buff[0] = null;
+
+        result = findLargestBST(this.root, buff);
+        System.out.println(result);
+        System.out.println("max BST size: " + result.bstSize);
+
+        if (buff[0] == null) {
+            System.out.println("buff is null!");
+        } else {
+            System.out.println("max BST root node val: " + buff[0].data);
+        }
+
+        System.out.println("inorder of max BST: ");
+        inorder(buff[0]);
+
     }
 
-    private Result findLargestBST(Node node, Result result) {
+    private Result findLargestBST(Node node, Node [] buff) {
+        Result result = new Result();
+        if (node == null) {
+            result.isBST = true;
+            return result;
+        }
 
+        Result left = findLargestBST(node.left, buff);
+        Result right = findLargestBST(node.right, buff);
+
+        result.low = Math.min(left.low, node.data);
+        result.high = Math.max(right.high, node.data);
+
+        if (left.isBST && right.isBST && node.data > left.high && node.data < right.low) {
+            result.bstSize = 1 + left.bstSize + right.bstSize;
+            result.isBST = true;
+            buff[0] = node;
+        } else {
+            result.bstSize = Math.max(left.bstSize, right.bstSize);
+            result.isBST = false;
+        }
+        return result;
     }
 
     public void inorder() {
@@ -124,5 +165,10 @@ class Result {
         high = Integer.MIN_VALUE;
         bstSize = 0;
         isBST = false;
+    }
+
+    @Override
+    public String toString() {
+        return "[low: " + low + ", high: " + high + ", BST size: " + bstSize + ", isBST: " + isBST + "]";
     }
 }
