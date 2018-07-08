@@ -55,6 +55,14 @@ public class BSTLargest {
         bst.inorder();
     }
 
+    public void findLargestBST() {
+
+    }
+
+    private Result findLargestBST(Node node, Result result) {
+
+    }
+
     public void inorder() {
         inorder(this.root);
     }
@@ -102,5 +110,19 @@ class Node {
         this.data = data;
         this.left = null;
         this.right = null;
+    }
+}
+
+class Result {
+    int low;
+    int high;
+    int bstSize;
+    boolean isBST;
+
+    Result() {
+        low = Integer.MAX_VALUE;
+        high = Integer.MIN_VALUE;
+        bstSize = 0;
+        isBST = false;
     }
 }
