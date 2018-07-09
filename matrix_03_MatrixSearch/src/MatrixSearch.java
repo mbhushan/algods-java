@@ -54,9 +54,36 @@ public class MatrixSearch {
         System.out.println();
         for (int i=0; i<keys.length; i++) {
             System.out.println(keys[i] + " found: " + ms.searchMatrix(M, keys[i]));
+            System.out.println(keys[i] + " found (binary search): " + ms.binarySearchMatrix(M, keys[i]));
         }
 
 
+    }
+
+    public boolean binarySearchMatrix(int [][] M, int key) {
+
+        if (M == null || M.length < 1 || M[0].length < 1) {
+            return false;
+        }
+
+        int row = M.length;
+        int col = M[0].length;
+        int low = 0;
+        int high = row*col-1;
+        while (low <= high) {
+            int mid = low + (high-low)/2;
+            int r = mid / col;
+            int c = mid % col;
+            if (M[r][c] == key) {
+                return true;
+            } else if (key < M[r][c]){
+               high = mid-1;
+            } else {
+                low = mid+1;
+            }
+        }
+
+        return false;
     }
 
     public boolean searchMatrix(int [][] M, int key) {
