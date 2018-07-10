@@ -3,6 +3,17 @@
 
  Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right
  which minimizes the sum of all numbers along its path.
+
+ ================
+ INPUT / OUTPUT
+ =================
+ input matrix:
+ 1 2 3
+ 4 8 2
+ 1 5 3
+
+ min path cost (movement: right and down): 11
+ min path cost (movement: right, down, diagonally): 8
  */
 
 public class MinPathSum {
@@ -30,8 +41,36 @@ public class MinPathSum {
         int c = 0;
         int pathCost = minPathSum2Directions(M, r, c, row-1, col-1);
         System.out.println("min path cost (movement: right and down): " + pathCost);
+        pathCost = minPathSum3Directions(M, r, c, row-1, col-1);
+        System.out.println("min path cost (movement: right, down, diagonally): " + pathCost);
     }
 
+    //only traverse down, right and diagonally lower cells from a given cell, i.e.,
+    // from a given cell (i, j), cells (i+1, j), (i, j+1) and (i+1, j+1) can be traversed.
+    private int minPathSum3Directions(int [][] M, int r, int c, int row, int col) {
+        if (r == row && c == col) {
+            return M[row][col];
+        }
+
+        if (r < row && c < col) {
+            int cost1 = M[r][c] + minPathSum3Directions(M, r+1, c, row, col);
+            int cost2 = M[r][c] + minPathSum3Directions(M, r, c+1, row, col);
+            int cost3 = M[r][c] + minPathSum3Directions(M, r+1, c+1, row, col);
+            return Math.min(cost1, Math.min(cost2, cost3));
+        }
+
+        if (r < row) {
+            return M[r][c] + minPathSum3Directions(M, r+1, c, row, col);
+        }
+
+        if (c < col) {
+            return M[r][c] + minPathSum3Directions(M, r, c+1, row, col);
+        }
+
+        return 0;
+    }
+
+    // traverse right and botton direction only.
     private int minPathSum2Directions(int [][] M, int r, int c, int row, int col) {
         if (r == row && c == col) {
             return M[row][col];
