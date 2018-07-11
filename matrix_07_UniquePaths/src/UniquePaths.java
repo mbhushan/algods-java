@@ -6,6 +6,14 @@
 
  How many possible unique paths are there?
 
+ =================
+ INPUT / OUTPUT
+ =================
+ unique paths for (3, 3)
+ 6
+
+ DP approach for finding unique paths: 6
+
  */
 
 public class UniquePaths {
