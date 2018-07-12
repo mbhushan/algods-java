@@ -11,6 +11,163 @@ import java.util.List;
  An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
  You may assume all four edges of the grid are all surrounded by water.
 
+ ===============
+ INPUT / OUTPUT
+ ===============
+
+ Started island counting for island: 1
+ Add land positions:
+ [[0, 0], [0, 1], [0, 2], [0, 3], [1, 0], [1, 1], [1, 3], [2, 0], [2, 1]]
+ island count: 1
+ 1 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 1
+ 1 1 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 1
+ 1 1 1 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 1
+ 1 1 1 1 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 1
+ 1 1 1 1 0
+ 1 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 0
+ 1 1 1 1 0
+ 1 1 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 0
+ 1 1 1 1 0
+ 1 1 0 1 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 0
+ 1 1 1 1 0
+ 1 1 0 1 0
+ 1 0 0 0 0
+ 0 0 0 0 0
+
+ island count: -1
+ 1 1 1 1 0
+ 1 1 0 1 0
+ 1 1 0 0 0
+ 0 0 0 0 0
+
+ FINISHED island counting for island: 1
+
+ Started island counting for island: 2
+ Add land positions:
+ [[0, 0], [0, 2], [1, 0], [1, 3], [2, 0], [2, 1]]
+ island count: 1
+ 1 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 2
+ 1 0 1 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 2
+ 1 0 1 0 0
+ 1 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 3
+ 1 0 1 0 0
+ 1 0 0 1 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 3
+ 1 0 1 0 0
+ 1 0 0 1 0
+ 1 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 3
+ 1 0 1 0 0
+ 1 0 0 1 0
+ 1 1 0 0 0
+ 0 0 0 0 0
+
+ FINISHED island counting for island: 2
+
+ Started island counting for island: 3
+ Add land positions:
+ [[0, 0], [0, 1], [0, 3], [1, 1], [1, 3], [3, 0], [3, 2], [3, 4]]
+ island count: 1
+ 1 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 1
+ 1 1 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 2
+ 1 1 0 1 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 2
+ 1 1 0 1 0
+ 0 1 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 2
+ 1 1 0 1 0
+ 0 1 0 1 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+
+ island count: 3
+ 1 1 0 1 0
+ 0 1 0 1 0
+ 0 0 0 0 0
+ 1 0 0 0 0
+
+ island count: 4
+ 1 1 0 1 0
+ 0 1 0 1 0
+ 0 0 0 0 0
+ 1 0 1 0 0
+
+ island count: 5
+ 1 1 0 1 0
+ 0 1 0 1 0
+ 0 0 0 0 0
+ 1 0 1 0 1
+
+ FINISHED island counting for island: 3
+
  */
 public class IslandCount2 {
 
