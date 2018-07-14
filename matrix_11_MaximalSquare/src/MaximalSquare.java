@@ -35,7 +35,28 @@
                     0  0  0  0  0
                     The value of maximum entry in above matrix is 3 and coordinates of the entry are (4, 3).
                     Using the maximum value and its coordinates, we can find out the required sub-matrix.
+
+ =================
+ INPUT / OUTPUT
+ ==================
+ input matrix:
+ 0 1 1 0 1
+ 1 1 0 1 0
+ 0 1 1 1 0
+ 1 1 1 1 0
+ 1 1 1 1 1
+ 0 0 0 0 0
+ DP matrix:
+ 0 1 1 0 1
+ 1 1 0 1 0
+ 0 1 1 1 0
+ 1 1 2 2 0
+ 1 2 2 3 1
+ 0 0 0 0 0
+
+ max square: 3
  */
+
 
 public class MaximalSquare {
 
@@ -50,5 +71,66 @@ public class MaximalSquare {
                 {1, 1, 1, 1, 1},
                 {0, 0, 0, 0, 0}
         };
+
+        System.out.println("input matrix: ");
+        ms.printMatrix(M);
+
+        ms.maxSquare(M);
+        System.out.println();
     }
+
+    public void maxSquare(int [][] M) {
+
+        int row = M.length;
+        int col = M[0].length;
+
+        int maxSquare = 0;
+
+        int [][] T = new int[row][col];
+
+        T[0][0] = M[0][0];
+
+        for (int i=1; i<col; i++) {
+            T[0][i] = M[0][i];
+        }
+
+        for (int i=1; i<row; i++) {
+            T[i][0] = M[i][0];
+        }
+
+        for (int i=1; i<row; i++) {
+            for (int j=1; j<col; j++) {
+                if (M[i][j] == 0) {
+                    T[i][j] = 0;
+                } else {
+                    T[i][j] = Math.min(T[i - 1][j - 1], Math.min(T[i - 1][j], T[i][j - 1])) + 1;
+                    if (T[i][j] > maxSquare) {
+                        maxSquare = T[i][j];
+                    }
+                }
+            }
+        }
+
+        System.out.println("DP matrix: ");
+        printMatrix(T);
+
+        System.out.println();
+        System.out.println("max square: " + maxSquare);
+    }
+
+    public void printMatrix(int [][] M) {
+        if (M == null) {
+            return;
+        }
+        int row = M.length;
+        int col = M[0].length;
+
+        for (int i=0; i<row; i++) {
+            for (int j=0; j<col; j++) {
+                System.out.print(M[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
 }
