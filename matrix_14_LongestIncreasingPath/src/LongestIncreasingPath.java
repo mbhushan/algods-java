@@ -37,4 +37,9 @@ public class LongestIncreasingPath {
 
     }
 
+
+    public void longestInceasingPath(int [][] M) {
+
+    }
+
 }
