@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  Longest Increasing Path in Matrix
  Given a matrix of N rows and M columns. From m[i][j],
@@ -39,7 +41,14 @@ public class LongestIncreasingPath {
 
 
     public void longestInceasingPath(int [][] M) {
+        if (M == null) {
+            return;
+        }
 
+    }
+
+    private void longestIncreasingPath(int [][] M, List<Integer> paths) {
+        return;
     }
 
 }
