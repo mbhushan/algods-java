@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +37,8 @@ public class LongestIncreasingPath {
                 { 4, 5, 6, 7 },
         };
 
+        lip.longestInceasingPath(M);
+
 
     }
 
@@ -45,10 +48,52 @@ public class LongestIncreasingPath {
             return;
         }
 
+        int row = M.length;
+        int col = M[0].length;
+
+        boolean [][] visited = new boolean[row][col];
+        List<Integer> path = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
+
+        for (int i=0; i<row; i++) {
+            for (int j=0; j<col; j++) {
+                visited = new boolean[row][col];
+                path = new ArrayList<>();
+                path.add(M[i][j]);
+                dfs(M, visited, i, j, path, result);
+               // System.out.println("path: " + path);
+            }
+        }
+
+        System.out.println("longest increasing path: ");
+        System.out.println(result);
+
     }
 
-    private void longestIncreasingPath(int [][] M, List<Integer> paths) {
-        return;
+    private void dfs(int [][] M, boolean [][] visited, int r, int c, List<Integer> path, List<Integer> result) {
+
+        int [][] directions = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+
+        for (int i=0; i<directions.length; i++) {
+            int r1 = r + directions[i][0];
+            int c1 = c + directions[i][1];
+
+            if (r1 < 0 || r1 >= M.length || c1 < 0 || c1 >= M[0].length) {
+                continue;
+            }
+
+            if (M[r1][c1] > M[r][c]) {
+                visited[r1][c1] = true;
+                path.add(M[r1][c1]);
+                dfs(M, visited, r1, c1, path, result);
+            }
+        }
+        //System.out.println("path: " + path);
+        if (path.size() > result.size()) {
+            result.clear();
+            result.addAll(path);
+        }
+        path.clear();
     }
 
 }
