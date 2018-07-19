@@ -23,6 +23,17 @@ import java.util.List;
  Output :3
  Longest path is either 1 2 4 or
  1 3 4.
+
+==================
+ INPUT / OUTPUT
+ =================
+ input matrix:
+ 1 2 3 4
+ 2 2 3 4
+ 3 2 3 4
+ 4 5 6 7
+ longest increasing path:
+ [1, 2, 3, 4, 5, 6, 7]
  */
 
 public class LongestIncreasingPath {
@@ -38,6 +49,8 @@ public class LongestIncreasingPath {
         };
 
         lip.longestInceasingPath(M);
+
+        lip.longestIncrPathDP(M);
 
 
     }
@@ -64,6 +77,9 @@ public class LongestIncreasingPath {
                // System.out.println("path: " + path);
             }
         }
+
+        System.out.println("input matrix: ");
+        printMatrix(M);
 
         System.out.println("longest increasing path: ");
         System.out.println(result);
@@ -94,6 +110,74 @@ public class LongestIncreasingPath {
             result.addAll(path);
         }
         path.clear();
+    }
+
+    public void longestIncrPathDP(int [][] M) {
+        if (M == null) {
+            return;
+        }
+
+        int row = M.length;
+        int col = M[0].length;
+
+        int [][] T = new int[row][col];
+        T[0][0] = 1;
+
+        for (int i=1; i<col; i++) {
+            if (M[0][i] > M[0][i-1]) {
+                T[0][i] = T[0][i-1] + 1;
+            } else {
+                T[0][i] = 1;
+            }
+        }
+
+        for (int i=1; i<row; i++) {
+            if (M[i][0] > M[i-1][0]) {
+                T[i][0] = T[i-1][0] + 1;
+            } else {
+                T[i][0] = 1;
+            }
+        }
+
+        int lip = 1;
+
+        for (int i=1; i<row; i++) {
+            for (int j=1; j<col; j++) {
+                if (M[i][j] > M[i-1][j] && M[i][j] > M[i][j-1] ) {
+                    T[i][j] = Math.max(T[i-1][j], T[i][j-1]) + 1;
+                } else if (M[i][j] > M[i-1][j] ) {
+                    T[i][j] = 1 + T[i-1][j];
+                } else if (M[i][j] > M[i][j-1]) {
+                    T[i][j] = 1 + T[i][j-1];
+                } else {
+                    T[i][j] = 1 ;
+                }
+
+                if (lip < T[i][j]) {
+                    lip = T[i][j];
+                }
+
+            }
+        }
+
+        System.out.println("printing DP matrix: ");
+        printMatrix(T);
+        System.out.println("longest increasing path: " + lip);
+    }
+
+    public void printMatrix(int [][] M) {
+        if (M == null) {
+            return;
+        }
+        int row = M.length;
+        int col = M[0].length;
+
+        for (int i=0; i<row; i++) {
+            for (int j=0; j<col; j++) {
+                System.out.print(M[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
 }
