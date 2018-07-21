@@ -38,6 +38,41 @@
  0 0 1
  0 1 1
 
+ input matrix:
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 1 1 0 0 0 0 0
+ 0 0 0 0 1 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 1 1 0 0 0 0 0
+ 0 0 1 1 0 0 0 0 0 0
+ 0 0 0 0 0 1 0 0 0 0
+ 0 0 0 0 1 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
+
+ next state 1 of game of life:
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 1 1 0 0 0 0 0
+ 0 0 0 1 1 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 1 1 1 0 0 0 0 0
+ 0 0 1 1 0 0 0 0 0 0
+ 0 0 0 1 1 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
+
+ next state 2 of game of life:
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 1 1 0 0 0 0 0
+ 0 0 0 1 1 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 1 0 0 0 0 0 0
+ 0 0 1 0 1 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 1 1 1 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0
  */
 public class GameOfLife {
 
@@ -51,6 +86,19 @@ public class GameOfLife {
                 {0,0,0}
         };
 
+        int[][] grid = {
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 },
+                { 0, 0, 1, 1, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+        };
+
         System.out.println("input matrix: ");
         gl.printMatrix(M);
         System.out.println();
@@ -61,6 +109,20 @@ public class GameOfLife {
             System.out.println("next state " + i + " of game of life: ");
             gl.nextState(M);
             gl.printMatrix(M);
+            System.out.println();
+            ++i;
+        }
+
+        System.out.println("input matrix: ");
+        gl.printMatrix(grid);
+        System.out.println();
+
+        i=1;
+        numState = 2;
+        while (i <= numState) {
+            System.out.println("next state " + i + " of game of life: ");
+            gl.nextState(grid);
+            gl.printMatrix(grid);
             System.out.println();
             ++i;
         }
