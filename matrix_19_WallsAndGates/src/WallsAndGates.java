@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
 
  Leetcode: Walls and Gates
@@ -32,13 +35,25 @@
  =================
  INPUT / OUTPUT
  =================
- input matrix:
+ input matrix for DFS approach:
  INF   -1    0    INF
  INF   INF   INF   -1
  INF   -1    INF   -1
  0    -1    INF   INF
 
- matrix with distance updated:
+ DFS - matrix with distance updated:
+ 3    -1    0    1
+ 2    2    1    -1
+ 1    -1    2    -1
+ 0    -1    3    4
+
+ input matrix for BFS approach:
+ INF   -1    0    INF
+ INF   INF   INF   -1
+ INF   -1    INF   -1
+ 0    -1    INF   INF
+
+ BFS - matrix with distance updated:
  3    -1    0    1
  2    2    1    -1
  1    -1    2    -1
@@ -60,12 +75,28 @@ public class WallsAndGates {
                 {0, -1, Integer.MAX_VALUE, Integer.MAX_VALUE},
         };
 
-        System.out.println("input matrix: ");
+        int [][] N = {
+                {Integer.MAX_VALUE, -1, 0, Integer.MAX_VALUE},
+                {Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, -1},
+                {Integer.MAX_VALUE, -1, Integer.MAX_VALUE, -1},
+                {0, -1, Integer.MAX_VALUE, Integer.MAX_VALUE},
+        };
+
+        System.out.println("input matrix for DFS approach: ");
         wg.printMatrix(M);
         System.out.println();
 
-        wg.findDistances(M);
-        System.out.println("matrix with distance updated: ");
+        wg.findDistancesDFS(M);
+        System.out.println("DFS - matrix with distance updated: ");
+        wg.printMatrix(M);
+        System.out.println();
+
+        System.out.println("input matrix for BFS approach: ");
+        wg.printMatrix(N);
+        System.out.println();
+
+        wg.findDistancesBFS(N);
+        System.out.println("BFS - matrix with distance updated: ");
         wg.printMatrix(M);
         System.out.println();
 
@@ -73,7 +104,58 @@ public class WallsAndGates {
 
     }
 
-    public void findDistances(int [][] M) {
+    public void findDistancesBFS(int [][] M) {
+        if (M == null) {
+            return;
+        }
+
+        int row = M.length;
+        int col = M[0].length;
+
+        for (int i=0; i<row; i++) {
+            for (int j=0; j<col; j++) {
+                boolean [][] visited = new boolean[row][col];
+                if (M[i][j] == 0) {
+                    Cell cell = new Cell(i, j);
+                    bfs(M, visited, cell);
+                }
+            }
+        }
+    }
+
+    public void bfs(int [][] M, boolean [][] visited, Cell cell) {
+        Queue<Cell> queue = new LinkedList<Cell>();
+        queue.add(cell);
+
+        while (!queue.isEmpty()) {
+            cell = queue.remove();
+
+            int [][] directions = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+
+            for (int i=0; i<directions.length; i++) {
+                int r1 = cell.row + directions[i][0];
+                int c1 = cell.col + directions[i][1];
+
+                if (r1 < 0 || r1 >= M.length || c1 < 0 || c1 >= M[0].length || M[r1][c1] == -1 || M[r1][c1] == 0) {
+                    continue;
+                }
+                if (visited[r1][c1]) {
+                    continue;
+                }
+
+                visited[r1][c1] = true;
+
+                Cell adjCell = new Cell(r1, c1);
+                if (cell.dist+1 < adjCell.dist) {
+                    adjCell.dist = cell.dist + 1;
+                }
+                queue.add(adjCell);
+            }
+
+        }
+    }
+
+    public void findDistancesDFS(int [][] M) {
 
         int row = M.length;
         int col = M[0].length;
@@ -132,5 +214,22 @@ public class WallsAndGates {
             }
             System.out.println();
         }
+    }
+}
+
+class Cell {
+    int row;
+    int col;
+    int dist;
+
+    Cell(int r, int c) {
+        this.row = r;
+        this.col = c;
+        this.dist = 0;
+    }
+
+    @Override
+    public String toString() {
+        return "[ row:" + this.row + ", col: " + this.col + ", distance: " + this.dist + "]";
     }
 }
