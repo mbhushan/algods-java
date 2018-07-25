@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  LeetCode – Best Meeting Point (Java)
 
@@ -35,7 +38,24 @@ public class BestMeetingPoint {
         bmp.printMatrix(M);
     }
 
-    public void find
+    public void findBestMeetingPoint(int [][] M) {
+        if (M == null) {
+            return;
+        }
+        List<Integer> rows = new ArrayList<>();
+        List<Integer> cols = new ArrayList<>();
+        int row = M.length;
+        int col = M[0].length;
+
+        for (int i=0; i<row; i++) {
+            for (int j=0; j<col; j++) {
+                if (M[i][j] == 1) {
+                    rows.add(i);
+                    cols.add(j);
+                }
+            }
+        }
+    }
 
     public void printMatrix(int [][] M) {
         if (M == null) {
