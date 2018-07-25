@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,6 +22,20 @@ import java.util.List;
  =================
  INPUT / OUTPUT
  =================
+ input matrix:
+ 1 0 0 0 1
+ 0 0 0 0 0
+ 0 0 1 0 0
+
+ best meeting point: [0, 2]
+ min total distance: 6
+ input matrix:
+ 1 0 1 0 1
+ 0 1 0 0 0
+ 0 1 1 0 0
+
+ best meeting point: [1, 2]
+ min total distance: 11
  */
 
 public class BestMeetingPoint {
@@ -34,8 +49,21 @@ public class BestMeetingPoint {
                 {0, 0, 1, 0, 0}
         };
 
+        int [][] N =  {
+                {1, 0, 1, 0, 1},
+                {0, 1, 0, 0, 0},
+                {0, 1, 1, 0, 0}
+        };
+
         System.out.println("input matrix: ");
         bmp.printMatrix(M);
+        System.out.println();
+        bmp.findBestMeetingPoint(M);
+
+        System.out.println("input matrix: ");
+        bmp.printMatrix(N);
+        System.out.println();
+        bmp.findBestMeetingPoint(N);
     }
 
     public void findBestMeetingPoint(int [][] M) {
@@ -55,6 +83,26 @@ public class BestMeetingPoint {
                 }
             }
         }
+
+        int totalDistance = 0;
+
+        Collections.sort(cols);
+
+        int midRow = rows.get(rows.size() / 2);
+        int midCol = cols.get(cols.size() / 2);
+
+        for (int r: rows) {
+            totalDistance += Math.abs(r - midRow);
+        }
+
+        for (int c : cols) {
+            totalDistance += Math.abs(c - midCol);
+        }
+
+        System.out.println("best meeting point: [" + midRow + ", " + midCol + "]");
+        System.out.println("min total distance: " + totalDistance);
+
+
     }
 
     public void printMatrix(int [][] M) {
