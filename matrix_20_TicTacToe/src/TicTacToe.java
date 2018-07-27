@@ -36,6 +36,40 @@
  board is a length-3 array of strings, where each string board[i] has length 3.
  Each board[i][j] is a character in the set {" ", "X", "O"}.
 
+ ======================
+ INPUT / OUTPUT
+ ======================
+ input board configuration:
+ X X O
+ O O X
+ X O X
+
+ valid: true
+ input board configuration:
+ O
+
+
+
+ valid: false
+ input board configuration:
+ X O X
+ X
+
+
+ valid: false
+ input board configuration:
+ X X X
+
+ O O O
+
+ valid: false
+ input board configuration:
+ X O X
+ O   O
+ X O X
+
+ valid: true
+
  */
 
 public class TicTacToe {
@@ -49,9 +83,23 @@ public class TicTacToe {
                 {'X', 'O', 'X'}
         };
 
-        System.out.println("input board configuration: ");
-        tt.printMatrix(board);
-        System.out.println();
+        char [][][] boards = {
+                {{'X', 'X', 'O'}, {'O', 'O', 'X'}, {'X', 'O', 'X'}},
+                {{'O', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}},
+                {{'X', 'O', 'X'}, {' ', 'X', ' '}, {' ', ' ', ' '}},
+                {{'X', 'X', 'X'}, {' ', ' ', ' '}, {'O', 'O', 'O'}},
+                {{'X', 'O', 'X'}, {'O', ' ', 'O'}, {'X', 'O', 'X'}},
+
+        };
+
+        for (int i=0; i<boards.length; i++) {
+
+            System.out.println("input board configuration: ");
+            tt.printMatrix(boards[i]);
+            System.out.println();
+
+            System.out.println("valid: " + tt.checkValidity(boards[i]));
+        }
 
 
     }
@@ -76,14 +124,28 @@ public class TicTacToe {
 
         //check validity conditions
 
+
         //1. if xCount == oCount or xCount = oCount+1
         if (xCount == oCount || xCount == oCount+1) {
-            
+            //check if x wins.
+            if (checkWin(M, 'X', xCount)) {
+                if (xCount != oCount+1) {
+                    return false;
+                }
+            }
+
+            //check if O wins
+            if (checkWin(M, 'O', oCount)) {
+                if (xCount != oCount || checkWin(M, 'X', xCount)) {
+                    return false;
+                }
+            }
+            return true;
         }
 
 
 
-        return true;
+        return false;
     }
 
     public boolean checkWin(char [][] M, char player, int count) {
@@ -94,7 +156,7 @@ public class TicTacToe {
         //check all rows and cols
         int r = 0;
 
-        while (r++ < M.length) {
+        while (r < M.length) {
             count = 0;
             for (int i=0; i<M.length; i++) {
                 if (M[r][i] == player) {
@@ -113,6 +175,7 @@ public class TicTacToe {
             if (count == 3) {
                 return true;
             }
+            ++r;
         }
 
         //check back diagonal
