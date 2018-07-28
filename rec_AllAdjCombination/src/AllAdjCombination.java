@@ -12,6 +12,7 @@
 public class AllAdjCombination {
 
     public static void main(String[] args) {
+        AllAdjCombination ac = new AllAdjCombination();
 
     }
 
