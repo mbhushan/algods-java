@@ -7,6 +7,10 @@
  * 1 23 4
  * 1 2 3 34
  * 12 34
+
+ =====================
+ INPUT / OUTPUT
+ =====================
  */
 
 public class AllAdjCombination {
