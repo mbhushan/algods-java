@@ -14,6 +14,11 @@ import java.util.List;
  =====================
  INPUT / OUTPUT
  =====================
+ [1, 2, 3, 4]
+ [1, 2, 34]
+ [1, 23, 4]
+ [12, 3, 4]
+ [12, 34]
  */
 
 public class AllAdjCombination {
@@ -52,7 +57,7 @@ public class AllAdjCombination {
 
     private int getNum(int [] A, int start, int end) {
         int num = 0;
-        for (int i=start; i<end && i < A.length; i++) {
+        for (int i=start; i<end; i++) {
             num = (10*num + A[i]);
         }
         return num;
