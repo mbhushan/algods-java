@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,6 +43,34 @@ import java.util.List;
 
  Input : arr[] = [“ijk”, “kji”, “abc”, “cba”]
  Output : No
+
+ ==============
+ INPUT / OUTPUT
+ ==============
+ input: [geek, king]
+ chain possible: [geek, king]
+
+ input: [aaa]
+ chain possible: [aaa]
+
+ input: [aaa, bbb]
+ Not possible chain!
+
+ input: [for, geek, rig, kaf]
+ chain possible: [for, rig, geek, kaf]
+
+ input: [aab, bac, aaa, cda]
+ chain possible: [aab, bac, cda, aaa]
+
+ input: [aaa, bbb, baa, aab]
+ chain possible: [aaa, aab, bbb, baa]
+
+ input: [abc, efg, cde, ghi, ija]
+ chain possible: [abc, cde, efg, ghi, ija]
+
+ input: [ijk, kji, abc, cba]
+ Not possible chain!
+
  */
 
 public class ChainedStrings {
@@ -49,9 +78,27 @@ public class ChainedStrings {
     public static void main(String[] args) {
         ChainedStrings cs = new ChainedStrings();
 
-        String [] A = {"aaa", "bbb", "baa", "aab"};
+        String [][] A = {
+                {"geek", "king"},
+                {"aaa"},
+                {"aaa", "bbb"},
+                {"for", "geek", "rig", "kaf"},
+                {"aab", "bac", "aaa", "cda"},
+                {"aaa", "bbb", "baa", "aab"},
+                {"abc", "efg", "cde", "ghi", "ija"},
+                {"ijk", "kji", "abc", "cba"},
 
-        cs.chainPossible(A);
+
+        };
+
+        for (int i=0; i<A.length; i++) {
+            System.out.println("input: " + Arrays.toString(A[i]));
+            boolean ans = cs.chainPossible(A[i]);
+            if (!ans) {
+                System.out.println("Not possible chain!");
+            }
+            System.out.println();
+        }
 
 
     }
@@ -62,37 +109,39 @@ public class ChainedStrings {
         char last = first.charAt(first.length()-1);
         int index = 1;
 
-        chainPossible(A, visited, last, index);
+        return chainPossible(A, visited, last, index);
 
-        return true;
+        //return true;
     }
 
-    public void chainPossible(String [] A, List<String> visited, char last, int index) {
+    public boolean chainPossible(String [] A, List<String> visited, char last, int index) {
 
-        if (visited.size() == A.length) {
-            System.out.println(visited);
-            return ;
+        if (index == A.length) {
+            System.out.println("chain possible: " + Arrays.toString(A));
+            return true;
         }
 
         if (index >= A.length) {
-            return;
+            return false;
         }
 
-        char first = A[index].charAt(0);
+        for (int i=index; i<A.length; i++) {
+            char first = A[i].charAt(0);
+            if (first == last) {
+                char ch = A[i].charAt(A[i].length()-1);
 
-        if (first == last) {
-            last = A[index].charAt(A[index].length()-1);
-            visited.add(A[index]);
-            chainPossible(A, visited, last, index+1);
-            visited.remove(visited.size()-1);
-        } else if (index+1 < A.length){
-            //swap
-            String tmp = A[index];
-            A[index] = A[index+1];
-            A[index+1] = tmp;
-            chainPossible(A, visited, last, index);
+                String tmp = A[index];
+                A[index] = A[i];
+                A[i] = tmp;
+
+                boolean flag = chainPossible(A, visited, ch, index+1);
+
+                if (flag) {
+                    return true;
+                }
+            }
         }
 
-
+        return false;
     }
 }
