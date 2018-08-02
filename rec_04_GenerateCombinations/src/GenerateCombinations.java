@@ -18,28 +18,52 @@ import java.util.List;
  [2, 4]
  [3, 4]
 
+ =========
+ generating combinations of size: 1
+ printing combinations:
+ [1]
+ [2]
+ [3]
+ [4]
+
+ generating combinations of size: 2
+ printing combinations:
+ [1, 2]
+ [1, 3]
+ [1, 4]
+ [2, 3]
+ [2, 4]
+ [3, 4]
+
+ generating combinations of size: 3
+ printing combinations:
+ [1, 2, 3]
+ [1, 2, 4]
+ [1, 3, 4]
+ [2, 3, 4]
+
+ generating combinations of size: 4
+ printing combinations:
+ [1, 2, 3, 4]
+
  */
 
 public class GenerateCombinations {
 
     public static void main(String[] args) {
         GenerateCombinations gc = new GenerateCombinations();
-
         int [] A = {1, 2, 3, 4};
-        int r = 2;
-
-        gc.genCombinations(A, r);
-
+        for (int r = 1; r <= A.length; r++) {
+            System.out.println("generating combinations of size: " + r);
+            gc.genCombinations(A, r);
+            System.out.println();
+        }
     }
 
     public void genCombinations(int [] A, int r) {
-
         List<Integer> result = new ArrayList<>();
-        int index = 0;
-
-        System.out.println("printing all combinations: ");
+        System.out.println("printing combinations: ");
         generateCombinations(A, r, 0, result);
-
     }
 
     private void generateCombinations(int [] A, int r, int index, List<Integer> result) {
@@ -47,19 +71,13 @@ public class GenerateCombinations {
             System.out.println(result);
             return;
         }
-
         if (index >= A.length) {
             return;
         }
-
-
         for (int i=index; i<A.length; i++) {
-                result.add(A[i]);
+            result.add(A[i]);
             generateCombinations(A, r, i+1, result);
             result.remove(result.size()-1);
         }
-
     }
-
-
 }
