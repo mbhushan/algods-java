@@ -14,6 +14,20 @@ import java.util.List;
 
  ABC ACB BAC BCA CBA CAB
 
+ ===============
+ INPUT / OUTPUT
+ ===============
+
+ generating permutations for input:
+ [1, 2, 3]
+ generated permutations as:
+ [1, 2, 3]
+ [1, 3, 2]
+ [2, 1, 3]
+ [2, 3, 1]
+ [3, 2, 1]
+ [3, 1, 2]
+
  */
 
 public class GeneratePermutations {
@@ -25,6 +39,7 @@ public class GeneratePermutations {
 
         System.out.println("generating permutations for input: ");
         System.out.println(Arrays.toString(A));
+        System.out.println("generated permutations as: ");
         gp.permutation(A);
         System.out.println();
     }
