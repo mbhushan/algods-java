@@ -66,11 +66,13 @@ public class GeneratePermutations {
             int tmp = A[i];
             A[i] = A[index];
             A[index] = tmp;
+            //System.out.println("before: " + Arrays.toString(A));
             permutations(A, index+1, buff);
             tmp = A[i];
             A[i] = A[index];
             A[index] = tmp;
 
+            //System.out.println("after: " + Arrays.toString(A));
             buff.remove(buff.size()-1);
         }
     }
