@@ -15,8 +15,12 @@
 
 public class KeyPadPermutations {
 
+    private String [] dict = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
     public static void main(String[] args) {
         KeyPadPermutations kp = new KeyPadPermutations();
+
+
 
     }
 }
