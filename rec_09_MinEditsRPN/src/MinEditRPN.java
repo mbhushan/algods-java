@@ -26,6 +26,28 @@ public class MinEditRPN {
 
     public void minEdit(char [] S) {
 
+
+    }
+
+    private int minEdit(char [] S, int start, int end) {
+        if (end == start) {
+            if (S[start] == 'x') {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+
+        int numOperations = 0;
+
+        if (S[end] == 'x') {
+            numOperations += 1;
+        }
+
+
+        return 0;
+
+
     }
 
 
