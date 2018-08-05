@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  Imagine x is an operand and * is a binary operator.
  We say a string of x and * follows Reverse Polish notation if it is a postfix notation.
@@ -13,23 +15,54 @@
 
  Your algorithm should work for a string of size up to 100
 
+ ========
+ The min operations for **** is 3
+
+ The min operations for x**x is 2
+
+ The min operations for *x*x is 2
+
+ The min operations for xx** is 1
+
+ The min operations for x*** is 2
+
+ The min operations for **xx is 3
+
+ The min operations for xxxx is 2
+
  */
 
 public class MinEditRPN {
 
+   // private int minVal = Integer.MAX_VALUE;
+
     public static void main(String[] args) {
         MinEditRPN me = new MinEditRPN();
 
-        String S = "*x*x";
+        String [] S4 = {
+                "****", "x**x", "*x*x", "xx**", "x***", "**xx", "xxxx"
+        };
+
+        for (String s: S4) {
+            me.minEdit(s.toCharArray());
+        }
+
+        String s = "**xx";
+        me.minEdit(s.toCharArray());
 
     }
 
     public void minEdit(char [] S) {
+       // minVal = Integer.MAX_VALUE;
+        System.out.println("input: " + Arrays.toString(S));
+        int result = minEdit(S, 0, S.length-1);
 
+        System.out.println("result: " + result);
 
     }
 
     private int minEdit(char [] S, int start, int end) {
+
         if (end == start) {
             if (S[start] == 'x') {
                 return 0;
@@ -38,14 +71,49 @@ public class MinEditRPN {
             }
         }
 
-        int numOperations = 0;
-
-        if (S[end] == 'x') {
-            numOperations += 1;
+        if (end - start == 1) {
+            if (S[start] == 'x' && S[end] == 'x') {
+                return 1;
+            } else if (S[start] == 'x' && S[end] == '*') {
+                return 1;
+            } else if (S[start] == '*' && S[end] == 'x') {
+                return 1;
+            } else if (S[start] == '*' && S[end] == '*') {
+                return 2;
+            }
         }
 
+        if (S[end] == '*') {
+            int minVal = Integer.MAX_VALUE;
+            for (int k=start; k<end-1; k++) {
+                int left = minEdit(S, start, k);
+                int right = minEdit(S, k+1, end-1);
+                minVal = Math.min(minVal, left + right);
+            }
+            return minVal;
+        } else {
+            int minVal = Integer.MAX_VALUE;
+            for (int k=start; k<end-1; k++) {
+                int left = minEdit(S, start, k);
+                int right = minEdit(S, k+1, end-1);
+                minVal = Math.min(minVal, left + right+1);
 
-        return 0;
+            }
+
+            for (int k=start; k<end; k++) {
+                int left = minEdit(S, start, k);
+                int right = minEdit(S, k+1, end);
+                minVal = Math.min(minVal, left + right+1);
+
+            }
+
+            int temp = minEdit(S, start, end-1);
+            if(temp < minVal)
+                minVal = temp;
+
+            return minVal ;
+
+        }
 
 
     }
