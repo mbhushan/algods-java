@@ -30,6 +30,23 @@ import java.util.Arrays;
 
  The min operations for xxxx is 2
 
+ =====================
+ INPUT / OUTPUT
+ ====================
+ input: [*, *, *, *]
+ result: 3
+ input: [x, *, *, x]
+ result: 2
+ input: [*, x, *, x]
+ result: 2
+ input: [x, x, *, *]
+ result: 1
+ input: [x, *, *, *]
+ result: 2
+ input: [*, *, x, x]
+ result: 3
+ input: [x, x, x, x]
+ result: 2
  */
 
 public class MinEditRPN {
@@ -47,8 +64,8 @@ public class MinEditRPN {
             me.minEdit(s.toCharArray());
         }
 
-        String s = "**xx";
-        me.minEdit(s.toCharArray());
+//        String s = "**xx";
+//        me.minEdit(s.toCharArray());
 
     }
 
@@ -91,8 +108,9 @@ public class MinEditRPN {
                 minVal = Math.min(minVal, left + right);
             }
             return minVal;
-        } else {
+        } else { //last char is 'x'
             int minVal = Integer.MAX_VALUE;
+            //replace it with '*', rest is similar to above.
             for (int k=start; k<end-1; k++) {
                 int left = minEdit(S, start, k);
                 int right = minEdit(S, k+1, end-1);
@@ -100,6 +118,7 @@ public class MinEditRPN {
 
             }
 
+            //insert '*' at the end.
             for (int k=start; k<end; k++) {
                 int left = minEdit(S, start, k);
                 int right = minEdit(S, k+1, end);
@@ -107,16 +126,12 @@ public class MinEditRPN {
 
             }
 
-            int temp = minEdit(S, start, end-1);
+            //delete 'x'
+            int temp = minEdit(S, start, end-1)+1;
             if(temp < minVal)
                 minVal = temp;
 
             return minVal ;
-
         }
-
-
     }
-
-
 }
