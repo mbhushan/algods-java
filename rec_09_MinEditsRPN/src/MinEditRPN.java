@@ -16,23 +16,28 @@ import java.util.Arrays;
  Your algorithm should work for a string of size up to 100
 
  ========
+ Len: 4
  The min operations for **** is 3
-
  The min operations for x**x is 2
-
  The min operations for *x*x is 2
-
  The min operations for xx** is 1
-
  The min operations for x*** is 2
-
  The min operations for **xx is 3
-
  The min operations for xxxx is 2
+ =========
+ Len 5:
+
+ The min operations for x**xx is 2
+ The min operations for ***xx is 3
+ The min operations for x*xxx is 3
+ The min operations for x*x*x is 2
+ The min operations for **xx* is 2
+ The min operations for *x*xx is 2
 
  =====================
  INPUT / OUTPUT
  ====================
+ Calculating Edit for len: 4
  input: [*, *, *, *]
  result: 3
  input: [x, *, *, x]
@@ -47,6 +52,20 @@ import java.util.Arrays;
  result: 3
  input: [x, x, x, x]
  result: 2
+
+ Calculating Edit for len: 5
+ input: [x, *, *, x, x]
+ result: 2
+ input: [*, *, *, x, x]
+ result: 3
+ input: [x, *, x, x, x]
+ result: 3
+ input: [x, *, x, *, x]
+ result: 2
+ input: [*, *, x, x, *] //TODO: bug - it should be 2 edits.
+ result: 3
+ input: [*, x, *, x, x]
+ result: 2
  */
 
 public class MinEditRPN {
@@ -60,7 +79,19 @@ public class MinEditRPN {
                 "****", "x**x", "*x*x", "xx**", "x***", "**xx", "xxxx"
         };
 
+        String [] S5 = {
+          "x**xx", "***xx", "x*xxx", "x*x*x", "**xx*", "*x*xx"
+        };
+
+        System.out.println("Calculating Edit for len: 4");
         for (String s: S4) {
+            me.minEdit(s.toCharArray());
+        }
+
+        System.out.println();
+        System.out.println("Calculating Edit for len: 5");
+
+        for (String s: S5) {
             me.minEdit(s.toCharArray());
         }
 
@@ -128,8 +159,7 @@ public class MinEditRPN {
 
             //delete 'x'
             int temp = minEdit(S, start, end-1)+1;
-            if(temp < minVal)
-                minVal = temp;
+            minVal = Math.min(minVal, temp);
 
             return minVal ;
         }
