@@ -28,7 +28,10 @@ public class NQueen {
 
     public void solveNQueen(int n) {
         List<Cell> result = new ArrayList<>();
+        System.out.println("solving n-queen for N: " + n);
+        System.out.print("Queen placements: ");
         solveNQueen(n, 0, result);
+
     }
 
     private boolean solveNQueen(int N, int row, List<Cell> result) {
