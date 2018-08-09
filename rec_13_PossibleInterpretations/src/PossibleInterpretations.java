@@ -21,6 +21,26 @@ import java.util.List;
  * Input: {9, 1, 8}
  * Output: {"iah", "ir"}
  * [2 interpretations: iah(9,1,8), ir(9,18)]
+ *
+ ================
+ INPUT / OUTPUT
+ ===============
+ input: [1, 1]
+ possible interpretations:
+ [1, 1][aa]
+ [11][k]
+
+ input: [1, 2, 1]
+ possible interpretations:
+ [1, 2, 1][aba]
+ [1, 21][au]
+ [12, 1][la]
+
+ input: [9, 1, 8]
+ possible interpretations:
+ [9, 1, 8][iah]
+ [9, 18][ir]
+
  */
 
 public class PossibleInterpretations {
@@ -43,9 +63,6 @@ public class PossibleInterpretations {
             System.out.println();
 
         }
-
-        //pi.possibleInterpretations(M[1]);
-
     }
 
     public void possibleInterpretations(int [] A) {
