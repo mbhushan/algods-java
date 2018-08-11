@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  Custom Tree Problem
  You are given a set of links, e.g.
@@ -55,5 +60,28 @@ public class CustomTree {
 
         String [] links2 = {"a b", "a g", "b c", "c d", "d e", "c f",
                 "z y", "y x", "x w"};
+
+        ct.printCustomTree(links2);
     }
+
+    public void printCustomTree(String [] S) {
+        Map<String, List<String>> cmap = new HashMap<>();
+
+        for (String str: S) {
+            String [] A = str.split(" ");
+            List<String> children = new ArrayList<String>();
+            if (cmap.containsKey(A[0])) {
+                children = cmap.get(A[0]);
+            }
+            children.add(A[1]);
+            cmap.put(A[0], children);
+        }
+
+        System.out.println(cmap);
+    }
+}
+
+class Node {
+    char name;
+    List<Character> children;
 }
