@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -36,13 +37,13 @@ import java.util.Map;
  x ---> w
  The output would be following forest.
 
- -->a
- |-->b
- |   |-->c
- |   |   |-->d
- |   |   |   |-->e
- |   |   |-->f
- |-->g
+
+ -->a   |-->b
+        |   |-->c
+        |   |   |-->d
+        |   |   |   |-->e
+        |   |   |-->f
+        |-->g
 
  -->z
  |-->y
@@ -53,6 +54,20 @@ import java.util.Map;
  ===================
  INPUT / OUTPUT
  ===================
+ {a=[b, g], b=[c], c=[d, f], d=[e], x=[w], y=[x], z=[y]}
+ roots: [a, z]
+ -->a
+    |-->b
+        |-->c
+            |-->d
+                 |-->e
+            |-->f
+
+        |-->g
+ -->z
+        |-->y
+            |-->x
+                |-->w
 
  */
 
@@ -71,10 +86,16 @@ public class CustomTree {
 
     public void printCustomTree(String [] S) {
         Map<String, List<String>> cmap = new HashMap<>();
+        HashSet<String> roots = new HashSet<>();
+        HashSet<String> leafs = new HashSet<>();
 
         for (String str: S) {
             String [] A = str.split(" ");
             List<String> children = new ArrayList<String>();
+
+            roots.add(A[0]);
+            leafs.add(A[1]);
+
             if (cmap.containsKey(A[0])) {
                 children = cmap.get(A[0]);
             }
@@ -82,11 +103,35 @@ public class CustomTree {
             cmap.put(A[0], children);
         }
 
-        System.out.println(cmap);
-    }
-}
+        roots.removeAll(leafs);
 
-class Node {
-    char name;
-    List<Character> children;
+        System.out.println(cmap);
+        System.out.println("roots: " + roots);
+
+        StringBuffer sb = new StringBuffer();
+        StringBuffer arrow = new StringBuffer();
+        arrow.append(" -->");
+        for (String root: roots) {
+            System.out.print(arrow.toString() + root);
+            printTree(cmap, root, sb);
+            sb = new StringBuffer();
+        }
+    }
+
+    private void printTree(Map<String, List<String>> cmap, String root, StringBuffer sb) {
+        if (!cmap.containsKey(root)) {
+            return;
+        }
+
+        List<String> children = cmap.get(root);
+        sb.append("\t");
+        System.out.println();
+
+        for (String s: children) {
+            System.out.print(sb.toString() + "|-->" + s);
+            printTree(cmap, s, sb);
+        }
+        System.out.println();
+        sb.deleteCharAt(sb.length()-1);
+    }
 }
