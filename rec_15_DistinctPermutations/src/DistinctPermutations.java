@@ -32,4 +32,8 @@ public class DistinctPermutations {
         };
     }
 
+    public void permute(char [] A) {
+
+    }
+
 }
