@@ -30,6 +30,10 @@ public class DistinctPermutations {
         String [] inputs = {
                 "AB", "AA", "ABC", "ABA", "ABCA"
         };
+
+        for (String A: inputs) {
+            dp.permute(A.toCharArray());
+        }
     }
 
     public void permute(char [] A) {
