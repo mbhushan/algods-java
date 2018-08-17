@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  Print all distinct permutations of a given string with duplicates
  Given a string that may contain duplicates, write a function to print all permutations
@@ -37,6 +39,10 @@ public class DistinctPermutations {
     }
 
     public void permute(char [] A) {
+
+    }
+
+    private void permute(char [] A, List<Character> result) {
 
     }
 
