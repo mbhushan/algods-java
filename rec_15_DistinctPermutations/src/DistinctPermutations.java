@@ -65,8 +65,42 @@ public class DistinctPermutations {
 
     public void permute(char [] A) {
         Arrays.sort(A);
-        permute(A, 0, new ArrayList<>());
+        //permute(A, 0, new ArrayList<>());
+        permuteDistinct(A, 0, new ArrayList<>());
         System.out.println();
+    }
+
+    private void permuteDistinct(char [] A, int index, List<Character> result) {
+        if (result.size() == A.length) {
+            System.out.print(result.stream().map(String::valueOf).collect(Collectors.joining()) + " ");
+        }
+
+        if (index >= A.length) {
+            return;
+        }
+
+        for (int i = index; i < A.length; i++) {
+            if (i != index && A[i] == A[index]) {
+                continue;
+            }
+
+            if (!result.isEmpty() &&  A[i] == result.get(result.size()-1)) {
+                continue;
+            }
+
+            result.add(A[i]);
+
+            char tmp = A[i];
+            A[i] = A[index];
+            A[index] = tmp;
+            permute(A, index + 1, result);
+
+            tmp = A[i];
+            A[i] = A[index];
+            A[index] = tmp;
+
+            result.remove(result.size() - 1);
+        }
     }
 
     private void permute(char [] A, int index, List<Character> result) {
