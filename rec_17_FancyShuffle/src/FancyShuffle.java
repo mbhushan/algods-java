@@ -1,23 +1,20 @@
+import java.util.HashSet;
+import java.util.Set;
+
 /**
- Rearrange characters in a string such that no two adjacent are same
- Given a string with repeated characters, task is rearrange characters in a
- string so that no two adjacent characters are same.
+ Shuffle a character array so that no two repeated characters are together
 
- Note : It may be assumed that the string has only lowercase English alphabets.
+ ===============
+ INPUT / OUTPUT
+ ===============
+ input: ABA
+ output: [ABA]
 
- Examples:
+ input: AABB
+ output: [BABA, ABAB]
 
- Input: aaabc
- Output: abaca
-
- Input: aaabb
- Output: ababa
-
- Input: aa
- Output: Not Possible
-
- Input: aaaabc
- Output: Not Possible
+ input: ABCA
+ output: [ABCA, CABA, BACA, ABAC, ACAB, ACBA]
  */
 
 public class FancyShuffle {
@@ -25,14 +22,60 @@ public class FancyShuffle {
     public static void main(String [] args) {
         FancyShuffle fs = new FancyShuffle();
 
+        String [] inputs = {
+          "ABA", "AABB", "ABCA"
+        };
+
+        for (String s: inputs) {
+            System.out.println("input: " + s);
+            fs.shuffle(s);
+            System.out.println();
+        }
+
 
     }
 
     public void shuffle(String str) {
-
+        System.out.print("output: ");
+        Set<String> set = new HashSet<>();
+        shuffle(str.toCharArray(), 0, set);
+        System.out.print(set);
+        System.out.println();
     }
 
-    private void shuffle(char [] A, int index) {
+    private void shuffle(char [] A, int index, Set<String> set) {
+
+        if (index == A.length) {
+            set.add(new String(A));
+           // System.out.print(new String(A) + " ");
+            return;
+        }
+
+        if (index > A.length) {
+            return;
+        }
+
+        for (int i=index; i<A.length; i++) {
+
+            if (i != index && A[i] == A[index]) {
+                continue;
+            }
+
+            if (index > 0 && A[i] == A[index-1]) {
+                continue;
+            }
+
+            //regular permutation
+            char ch = A[i];
+            A[i] = A[index];
+            A[index] = ch;
+            shuffle(A, index+1, set);
+
+            //reverse the decision
+            ch = A[i];
+            A[i] = A[index];
+            A[index] = ch;
+        }
 
     }
 }
