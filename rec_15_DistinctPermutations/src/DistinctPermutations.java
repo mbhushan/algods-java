@@ -57,17 +57,51 @@ public class DistinctPermutations {
             System.out.println("input: " + A);
             System.out.print("output: ");
             dp.permute(A.toCharArray());
+            dp.fancyShuffle(A);
             System.out.println();
+
         }
 
-        //dp.permute("ABCA".toCharArray());
+       // dp.permute("ABA".toCharArray());
+       // dp.fancyShuffle("ABA");
     }
 
     public void permute(char [] A) {
         Arrays.sort(A);
-        //permute(A, 0, new ArrayList<>());
-        permuteDistinct(A, 0, new ArrayList<>());
+        permute(A, 0, new ArrayList<>());
+        //permuteDistinct(A, 0, new ArrayList<>());
         System.out.println();
+    }
+
+    public void fancyShuffle(String input) {
+        char [] A = input.toCharArray();
+        int index = 0;
+        System.out.print("fancy shuffle output: ");
+        fancyShuffle(A, index);
+        System.out.println();
+    }
+
+    private void fancyShuffle(char [] A, int index) {
+        if (index == A.length) {
+            System.out.print(new String(A) + " ");
+            return ;
+        }
+
+        for (int i=index; i<A.length; i++) {
+            if (i != index && A[i] == A[index]) {
+                continue;
+            }
+            if (index > 0 && A[i] == A[index-1]) {
+                continue;
+            }
+            char ch = A[i];
+            A[i] = A[index];
+            A[index] = ch;
+            fancyShuffle(A, index+1);
+            ch = A[i];
+            A[i] = A[index];
+            A[index] = ch;
+        }
     }
 
     private void permuteDistinct(char [] A, int index, List<Character> result) {
@@ -84,7 +118,7 @@ public class DistinctPermutations {
                 continue;
             }
 
-            if (!result.isEmpty() &&  A[i] == result.get(result.size()-1)) {
+            if (index > 0 && A[i] == A[index-1]) {
                 continue;
             }
 
