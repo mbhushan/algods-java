@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  Given a set of candidate numbers (candidates) (without duplicates) and a target number (target),
  find all unique combinations in candidates where the candidate numbers sums to target.
@@ -25,7 +29,21 @@
  [2,3,3],
  [3,5]
  ]
- Seen
+
+ =================
+ INPUT / OUTPUT
+ =================
+ candidates: [2, 3, 6, 7]
+ combinations summing to: 7
+ [2, 2, 3]
+ [7]
+
+
+ candidates: [2, 3, 5]
+ combinations summing to: 8
+ [2, 2, 2, 2]
+ [2, 3, 3]
+ [3, 5]
  */
 
 public class CombinationSum {
@@ -42,7 +60,32 @@ public class CombinationSum {
                 7, 8
         };
 
+        for (int i=0; i<candidates.length; i++) {
+            cs.combinationSum(candidates[i], targets[i]);
+            System.out.println();
+        }
     }
 
-    public void combinationSum()
+    public void combinationSum(int [] A, int target) {
+        System.out.println("candidates: " + Arrays.toString(A));
+        System.out.println("combinations summing to: " + target);
+        combinationSum(A, target, 0, new ArrayList<>());
+        System.out.println();
+    }
+
+    public void combinationSum(int [] A, int target, int index, List<Integer> buff) {
+        if (target == 0) {
+            System.out.println(buff);
+            return;
+        }
+
+        if (target < 0 || index >= A.length) {
+            return;
+        }
+
+        buff.add(A[index]);
+        combinationSum(A, target - A[index], index, buff);
+        buff.remove(buff.size()-1);
+        combinationSum(A, target, index+1, buff);
+    }
 }
