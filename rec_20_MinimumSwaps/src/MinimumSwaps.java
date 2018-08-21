@@ -35,6 +35,15 @@ import java.util.Map;
  d) Revert the changes made by previous step before returning
  control to parent call.
  e) Return 1 + min(a, b)
+
+ =================
+ INPUT / OUTPUT
+ =================
+ min swap: 2
+ Array: [4, 5, 6, 2, 3, 1]
+ index map: {1=5, 2=3, 3=1, 4=0, 5=2, 6=1}
+ IndexMap Array: [4, 6, 5, 2, 3, 1]
+
  */
 
 public class MinimumSwaps {
@@ -100,12 +109,12 @@ public class MinimumSwaps {
             //swap idx2 and idx3
             swap(A, indexMap, idx2, idx3, v2, pairs.get(v1));
             int first = minSwaps(A, pairs, indexMap, index+2);
-            //swap(A, indexMap, idx2, idx3, v2, pairs.get(v1));
+            //swap(A, indexMap, idx3, idx2, v2, pairs.get(v1));
 
             //swap idx1 and idx4
             swap(A, indexMap, idx1, idx4, v1, pairs.get(v2));
             int second = minSwaps(A, pairs, indexMap, index+2);
-            //swap(A, indexMap, idx1, idx4, v1, pairs.get(v2));
+            //swap(A, indexMap, idx4, idx1, v1, pairs.get(v2));
 
             return 1 + Math.min(first, second);
         }
