@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  Minimum number of swaps required for arranging pairs adjacent to each other
  There are n-pairs and therefore 2n people. everyone has one unique number ranging from 1 to 2n.
@@ -37,12 +41,82 @@ public class MinimumSwaps {
 
     public static void main(String[] args) {
         MinimumSwaps ms = new MinimumSwaps();
-
         int [] A = {1, 5, 6, 4, 3, 2};
+
+        Map<Integer, Integer> hmap = new HashMap<>();
+
+        //create pairs -  pairs[] = {1->3, 2->6, 4->5}
+        hmap.put(1, 3);
+        hmap.put(3, 1);
+        hmap.put(2, 6);
+        hmap.put(6, 2);
+        hmap.put(4, 5);
+        hmap.put(5, 4);
+
+        ms.minSwaps(A, hmap);
 
     }
 
-    public void minSwaps() {
+    public void minSwaps(int [] A, Map<Integer, Integer> hmap) {
 
+        Map<Integer, Integer> indexMap = new HashMap<>();
+
+        for (int i=0; i<A.length; i++) {
+            indexMap.put(A[i], i);
+        }
+
+        int minSwap = minSwaps(A, hmap, indexMap, 0);
+
+        System.out.println("min swap: " + minSwap);
+        System.out.println("Array: " + Arrays.toString(A) );
+        System.out.println("index map: " + indexMap);
+
+        for (Map.Entry<Integer, Integer> pair: indexMap.entrySet()) {
+            int k = pair.getKey();
+            int v = pair.getValue();
+            A[v] = k;
+        }
+        System.out.println("IndexMap Array: " + Arrays.toString(A) );}
+
+    private int minSwaps(int [] A, Map<Integer, Integer> pairs, Map<Integer, Integer> indexMap, int index) {
+
+        if (index >= A.length) {
+            return 0;
+        }
+
+        int v1 = A[index];
+        int v2 = A[index+1];
+
+        if (v1 == pairs.get(v2)) {
+            return minSwaps(A, pairs, indexMap, index+2);
+        } else {
+            int idx1 = indexMap.get(v1);
+            int idx2 = indexMap.get(v2);
+
+            //get the index of the pairs of v1 and v2
+            int idx3 = indexMap.get(pairs.get(v1));
+            int idx4 = indexMap.get(pairs.get(v2));
+
+            //swap idx2 and idx3
+            swap(A, indexMap, idx2, idx3, v2, pairs.get(v1));
+            int first = minSwaps(A, pairs, indexMap, index+2);
+            //swap(A, indexMap, idx2, idx3, v2, pairs.get(v1));
+
+            //swap idx1 and idx4
+            swap(A, indexMap, idx1, idx4, v1, pairs.get(v2));
+            int second = minSwaps(A, pairs, indexMap, index+2);
+            //swap(A, indexMap, idx1, idx4, v1, pairs.get(v2));
+
+            return 1 + Math.min(first, second);
+        }
+    }
+
+    private void swap(int [] A, Map<Integer, Integer> indexMap, int i, int j, int x, int y) {
+        indexMap.put(x, j);
+        indexMap.put(y, i);
+
+        int temp = A[i];
+        A[i] = A[j];
+        A[j] = temp;
     }
 }
