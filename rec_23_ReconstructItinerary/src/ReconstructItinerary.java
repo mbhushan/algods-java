@@ -1,5 +1,8 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  Given a list of airline tickets represented by pairs of departure and arrival airports [from, to],
@@ -26,6 +29,14 @@ import java.util.Map;
  Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
  But it is larger in lexical order.
 
+ =====================
+ INPUT / OUTPUT
+ =====================
+ reconstructing tickets: {LHR=SFO, MUC=LHR, SFO=SJC, JFK=MUC}
+ constructed itinerary: [JFK, MUC, LHR, SFO, SJC]
+
+ reconstructing tickets: {ATL=SFO, SFO=ATL, JFK=SFO}
+ constructed itinerary: [ATL, SFO, ATL, SFO]
  */
 
 public class ReconstructItinerary {
@@ -35,7 +46,13 @@ public class ReconstructItinerary {
 
         String [][] tickets = {{"MUC", "LHR"}, {"JFK", "MUC"}, {"SFO", "SJC"}, {"LHR", "SFO"}};
 
+        String [][] tickets2 = {{"JFK","SFO"}, {"SFO","ATL"}, {"ATL","JFK"}, {"ATL","SFO"}};
+
+
         ri.reconstructTravelPlan(tickets);
+        System.out.println();
+
+        ri.reconstructTravelPlan(tickets2);
     }
 
     public void reconstructTravelPlan(String [][] tickets) {
@@ -48,7 +65,41 @@ public class ReconstructItinerary {
             hmap.put(from, to);
         }
 
+        System.out.print("reconstructing tickets: ");
         System.out.println(hmap);
+
+        Set<String> keys = hmap.keySet();
+        int targetLen = hmap.size() + 1;
+
+        System.out.print("constructed itinerary: ");
+        for (String k:  keys) {
+
+            boolean flag = reconstructTravelPlan(hmap, k, targetLen, new ArrayList<>());
+            if (flag) {
+                break;
+            }
+        }
+    }
+
+    private boolean reconstructTravelPlan(Map<String, String> hmap, String src, int targetLen, List<String> result) {
+
+        result.add(src);
+
+        if (result.size() == targetLen) {
+            System.out.println(result);
+            return true;
+        }
+
+        if (hmap.containsKey(src)) {
+            String dest = hmap.get(src);
+
+            boolean flag = reconstructTravelPlan(hmap, dest, targetLen, result);
+            if (flag) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
