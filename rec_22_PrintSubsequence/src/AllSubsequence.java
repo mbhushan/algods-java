@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  Print all subsequences of a string
  Given a string, we have to find out all subsequences of it. A String is a subsequence of a given String,
@@ -10,6 +14,16 @@
 
  Input : aaa
  Output : a, aa, aaa
+
+ ===============
+ INPUT / OUTPUT
+ ===============
+ input: abc
+ All Subsequence: [; a; ab; abc; ac; b; bc; c; ]
+
+ input: aaa
+ All Subsequence: [; a; aa; aaa; ]
+
  */
 
 public class AllSubsequence {
@@ -21,5 +35,39 @@ public class AllSubsequence {
                 "abc",
                 "aaa"
         };
+
+        for (String s: S) {
+            System.out.println("input: " + s);
+            System.out.print("All Subsequence: [" );
+            as.genSubsequence(s.toCharArray());
+            System.out.print("]");
+            System.out.println();
+        }
+    }
+
+    public void genSubsequence(char [] A) {
+
+        genSubsequence(A, 0, new ArrayList<>());
+
+    }
+
+    private void genSubsequence(char [] A, int index, List<Character> result) {
+        if (index > A.length) {
+            return;
+        }
+
+        if (index <= A.length) {
+            System.out.print(result.stream().map(Object::toString).collect(Collectors.joining()) + "; ");
+
+        }
+
+        for (int i=index; i<A.length; i++) {
+            if (i != index && A[i] == A[index]) {
+                continue;
+            }
+            result.add(A[i]);
+            genSubsequence(A, i+1, result);
+            result.remove(result.size()-1);
+        }
     }
 }
