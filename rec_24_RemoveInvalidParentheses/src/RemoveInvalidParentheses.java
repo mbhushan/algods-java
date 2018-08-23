@@ -55,6 +55,37 @@ import java.util.stream.Collectors;
  input string: )(
  bfs result: []
 
+ Solution with DFS:
+ input: ()())()
+ DFS result: (())() ()()()
+
+ input: ()v)
+ DFS result: v
+
+ input: (a)())()
+ DFS result: (a()) (a)() a()()
+
+ input: )(
+ DFS result:
+
+
+ Solution with DFS2:
+ input: ()())()
+ left: 0; right: 1
+ DFS result: (())() ()()()
+
+ input: ()v)
+ left: 0; right: 1
+ DFS result: ()v (v)
+
+ input: (a)())()
+ left: 0; right: 1
+ DFS result: (a())() (a)()()
+
+ input: )(
+ left: 1; right: 1
+ DFS result:
+
  */
 
 public class RemoveInvalidParentheses {
@@ -106,6 +137,95 @@ public class RemoveInvalidParentheses {
         }
         System.out.println();
 
+
+        System.out.println("Solution with DFS2: ");
+        for (String e: expressions) {
+            System.out.println("input: " + e);
+            rip.rmParenthesisDFS2(e);
+            System.out.println();
+        }
+        System.out.println();
+
+    }
+
+    public void rmParenthesisDFS2(String input) {
+        char [] A = input.toCharArray();
+
+        Set<String> result = new TreeSet<>();
+
+        int left = 0;
+        int right = 0;
+        StringBuffer sb = new StringBuffer();
+
+        for (char ch: A) {
+            if (ch == '(') {
+                ++left;
+            } else if (ch == ')') {
+                if (left > 0) {
+                    --left;
+                } else {
+                    ++right;
+                }
+            }
+        }
+        System.out.println("left: " + left + "; right: " + right );
+
+        rmParenthesisDFS2(A, left, right, 0, 0, result, sb);
+        //System.out.println("DFS result: " + result);
+        System.out.print("DFS result: ");
+
+        if (result.size() == 0) {
+            System.out.println("NO RESULTS!");
+            return;
+        }
+
+        int maxLen = Collections.max(result).length();
+
+        for (String s: result) {
+            if (s.length() == maxLen) {
+                System.out.print(s + " ");
+            }
+        }
+        System.out.println();
+
+        //System.out.println(Collections.max(result));
+
+    }
+
+    private void rmParenthesisDFS2(char [] A, int left, int right, int index, int open, Set<String> result,
+                                  StringBuffer sb) {
+        if (index == A.length && left == 0 && right == 0 && open == 0) {
+            //System.out.println("inside result: " + sb.toString());
+            result.add(sb.toString());
+            return;
+        }
+
+        if (index == A.length || left < 0 || right < 0 || open < 0) {
+            return;
+        }
+
+        char ch = A[index];
+        int len = sb.length();
+
+        if (ch == '(') {
+            //exclude (
+            rmParenthesisDFS2(A, left-1, right, index+1, open, result, sb);
+            //include (
+            rmParenthesisDFS2(A, left, right, index+1, open+1, result, sb.append(ch));
+            //sb.deleteCharAt(sb.length()-1);
+        } else if (ch == ')') {
+            //exclude (
+            rmParenthesisDFS2(A, left, right-1, index+1, open, result, sb);
+            //include (
+            rmParenthesisDFS2(A, left, right, index+1, open-1, result, sb.append(ch));
+            //sb.deleteCharAt(sb.length()-1);
+        } else {
+            //non-bracket characters
+            rmParenthesisDFS2(A, left, right, index+1, open, result, sb.append(ch));
+            //sb.deleteCharAt(sb.length()-1);
+        }
+
+        sb.setLength(len);
     }
 
     public void rmParenthesisDFS(String input) {
