@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -93,6 +95,86 @@ public class RemoveInvalidParentheses {
             rip.rmParenthesisBFS(e);
             System.out.println();
         }
+
+        //rip.rmParenthesisDFS("()())()");
+
+        System.out.println("Solution with DFS: ");
+        for (String e: expressions) {
+            System.out.println("input: " + e);
+            rip.rmParenthesisDFS(e);
+            System.out.println();
+        }
+        System.out.println();
+
+    }
+
+    public void rmParenthesisDFS(String input) {
+        char [] A = input.toCharArray();
+
+        Set<String> result = new TreeSet<>();
+
+        int left = 0;
+        int right = 0;
+        int open = 0;
+        StringBuffer sb = new StringBuffer();
+
+        for (char ch: A) {
+            if (ch == '(') {
+                ++left;
+            } else if (ch == ')') {
+                ++right;
+            }
+        }
+
+        rmParenthesisDFS(A, left, right, 0, 0, result, sb);
+        //System.out.println("DFS result: " + result);
+        System.out.print("DFS result: ");
+
+        int maxLen = Collections.max(result).length();
+
+        for (String s: result) {
+            if (s.length() == maxLen) {
+                System.out.print(s + " ");
+            }
+        }
+        System.out.println();
+
+        //System.out.println(Collections.max(result));
+
+    }
+
+    private void rmParenthesisDFS(char [] A, int left, int right, int index, int open, Set<String> result,
+                                  StringBuffer sb) {
+        if (index == A.length && left == right && open == 0) {
+            result.add(sb.toString());
+            return;
+        }
+
+        if (index >= A.length || left < 0 || right < 0 || open < 0) {
+            return;
+        }
+
+        char ch = A[index];
+
+        if (ch == '(') {
+            //exclude (
+            rmParenthesisDFS(A, --left, right, index+1, open, result, sb);
+            //include (
+            rmParenthesisDFS(A, left, right, index+1, open+1, result, sb.append(ch));
+            sb.deleteCharAt(sb.length()-1);
+        } else if (ch == ')') {
+            //exclude (
+            rmParenthesisDFS(A, left, --right, index+1, open, result, sb);
+            //include (
+            rmParenthesisDFS(A, left, right, index+1, open-1, result, sb.append(ch));
+            sb.deleteCharAt(sb.length()-1);
+        } else {
+            //non-bracket characters
+            rmParenthesisDFS(A, left, right, index+1, open, result, sb.append(ch));
+            sb.deleteCharAt(sb.length()-1);
+        }
+
+
 
     }
 
