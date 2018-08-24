@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  Restore IP Addresses
  Given a string containing only digits, restore it by returning all possible valid IP address combinations.
@@ -50,7 +54,58 @@ public class RestoreIPAddress {
     public static void main(String[] args) {
         RestoreIPAddress rip = new RestoreIPAddress();
 
+        String [] input = {
+                "25525511135",
+        };
+
+        rip.restoreIP(input[0]);
+
+
     }
 
+    public void restoreIP(String input) {
+        if (input == null || input.length() < 1) {
+            return;
+        }
+        int [] A = new int[input.length()];
+        for (int i=0; i<A.length; i++) {
+            A[i] = input.charAt(i) - '0';
+        }
 
+        System.out.println(Arrays.toString(A));
+
+        restoreIP(A, 0, 0, new ArrayList<>());
+    }
+
+    private void restoreIP(int[] A, int index, int points, List<Integer> result) {
+
+        if (points == 4) {
+            System.out.println(result);
+            return;
+        }
+
+        if (index >= A.length) {
+            return;
+        }
+
+        for (int i = index; i < A.length; i++) {
+            if ((i - index) < 3) {
+                int num = getNumber(A, index, i);
+                if (num < 255) {
+                    result.add(num);
+                    restoreIP(A, i + 1, points + 1, result);
+                    result.remove(result.size() - 1);
+                }
+            }
+        }
+    }
+
+    private int getNumber(int [] A, int start, int end) {
+        int x = 0;
+        for (int i=start; i<=end; i++) {
+            x = x*10 + A[i];
+        }
+
+        return x;
+    }
 }
