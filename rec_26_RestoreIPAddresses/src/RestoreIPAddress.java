@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,6 +44,10 @@ import java.util.List;
  ===============
  INPUT / OUTPUT
  ===============
+ input string: 25525511135
+ possible ip addresses:
+ [255, 255, 11, 135]
+ [255, 255, 111, 35]
 
  */
 
@@ -58,9 +61,11 @@ public class RestoreIPAddress {
                 "25525511135",
         };
 
-        rip.restoreIP(input[0]);
-
-
+        for (String s: input) {
+            System.out.println("input string: " + s);
+            System.out.println("possible ip addresses: ");
+            rip.restoreIP(input[0]);
+        }
     }
 
     public void restoreIP(String input) {
@@ -72,30 +77,27 @@ public class RestoreIPAddress {
             A[i] = input.charAt(i) - '0';
         }
 
-        System.out.println(Arrays.toString(A));
-
+        //System.out.println(Arrays.toString(A));
         restoreIP(A, 0, 0, new ArrayList<>());
     }
 
     private void restoreIP(int[] A, int index, int points, List<Integer> result) {
-
         if (points == 4) {
-            System.out.println(result);
-            return;
+            if (index < A.length) {
+                return;
+            }
+            if (index >= A.length) {
+                System.out.println(result);
+                return;
+            }
         }
 
-        if (index >= A.length) {
-            return;
-        }
-
-        for (int i = index; i < A.length; i++) {
-            if ((i - index) < 3) {
-                int num = getNumber(A, index, i);
-                if (num < 255) {
-                    result.add(num);
-                    restoreIP(A, i + 1, points + 1, result);
-                    result.remove(result.size() - 1);
-                }
+        for (int i = index; i < A.length && (i - index < 3); i++) {
+            int num = getNumber(A, index, i);
+            if (num <= 255) {
+                result.add(num);
+                restoreIP(A, i + 1, points + 1, result);
+                result.remove(result.size() - 1);
             }
         }
     }
@@ -105,7 +107,6 @@ public class RestoreIPAddress {
         for (int i=start; i<=end; i++) {
             x = x*10 + A[i];
         }
-
         return x;
     }
 }
