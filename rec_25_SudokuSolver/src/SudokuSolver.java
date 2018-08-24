@@ -40,9 +40,101 @@ public class SudokuSolver {
                 {0, 0, 5, 2, 0, 6, 3, 0, 0}
         };
 
+        ss.sudokuSolver(board);
+        ss.printMatrix(board);
+
     }
 
-    public void sudokuSolver(int [][] M) {
+    public boolean sudokuSolver(int [][] M) {
 
+        int row = M.length;
+        int col = M[0].length;
+
+        for (int i=0; i<row; i++) {
+            for (int j=0; j<col; j++) {
+                if (M[i][j] != 0) {
+                    continue;
+                }
+                for (int k=1; k<=9; k++) {
+                    M[i][j] = k;
+                    if (isValidSudoku(M) && sudokuSolver(M)) {
+                        return true;
+                    }
+                    M[i][j] = 0;
+                }
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isValidSudoku(int [][] M) {
+        int row = M.length;
+        int col = M[0].length;
+
+        //check each Rows
+        for (int i=0; i<row; i++) {
+            boolean [] values = new boolean[10];
+            for (int j=0; j<col; j++) {
+                if (M[i][j] == 0) {
+                    continue;
+                }
+                if (values[M[i][j]]) {
+                    return false;
+                }
+                values[M[i][j]] = true;
+            }
+        }
+
+        //check each Column.
+        for (int i=0; i<col; i++) {
+            boolean [] values = new boolean[10];
+            for (int j=0; j<row; j++) {
+                if (M[j][i] == 0) {
+                    continue;
+                }
+                if (values[M[j][i]]) {
+                    return false;
+                }
+                values[M[j][i]] = true;
+            }
+        }
+
+        //check each 3x3 cell
+        for (int i=0; i<9; i+=3) {
+            for (int j=0; j<9; j+=3) {
+                boolean [] values = new boolean[10];
+                for (int k=0; k<3; k++) {
+                    for (int l=0; l<3; l++) {
+
+                        if ( M[i+k][j+l] == 0) {
+                            continue;
+                        }
+                        if (values[ M[i+k][j+l]]) {
+                            return false;
+                        }
+                        values[ M[i+k][j+l]] = true;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public void printMatrix(int [][] M) {
+        if (M == null) {
+            return;
+        }
+        int row = M.length;
+        int col = M[0].length;
+
+        for (int i=0; i<row; i++) {
+            for (int j=0; j<col; j++) {
+                System.out.print(M[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
