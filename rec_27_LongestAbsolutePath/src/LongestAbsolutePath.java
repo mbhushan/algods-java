@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 /**
  Suppose we abstract our file system by a string in the following manner:
@@ -52,11 +53,16 @@ public class LongestAbsolutePath {
                 "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
         };
 
-        lap.longestPath(inputs[1]);
+        for (String in: inputs) {
+            lap.longestPath(in);
+        }
 
     }
 
     public void longestPath(String input) {
+
+        System.out.println("input string: ");
+        System.out.println(input);
         String [] tokens = input.split("\n");
 
         List<Node> list = new ArrayList<>();
@@ -65,8 +71,50 @@ public class LongestAbsolutePath {
             list.add(node);
         }
 
-        System.out.println(Arrays.toString(tokens));
-        System.out.println(list);
+        System.out.println("tokens with tabs: " + Arrays.toString(tokens));
+        System.out.println("list of path nodes: " + list);
+
+        longestPath(list);
+        System.out.println();
+    }
+
+    private String longestPath(List<Node> list){
+        StringBuilder sb = new StringBuilder();
+
+        List<String> path = new ArrayList<>();
+        Stack<Node> stack = new Stack<>();
+        int maxPathSize = 0;
+        String longestPath = null;
+
+        for (Node node: list) {
+            if (stack.isEmpty()) {
+                path.add(node.data);
+                stack.push(node);
+            } else {
+                if (node.tabs <= stack.peek().tabs) {
+                    if (path.size() > maxPathSize) {
+                        maxPathSize = path.size();
+                        longestPath = path.toString();
+                    }
+                    while (!stack.isEmpty() && stack.peek().tabs >= node.tabs) {
+                        stack.pop();
+                        path.remove(path.size()-1);
+                    }
+                }
+                path.add(node.data);
+                stack.push(node);
+            }
+        }
+        if (path.size() > maxPathSize) {
+            maxPathSize = path.size();
+            longestPath = path.toString();
+        }
+
+        System.out.println("longest path size: " + maxPathSize);
+        longestPath = String.join("/", path);
+        System.out.println("longest path: " + longestPath);
+
+        return longestPath;
     }
 }
 
