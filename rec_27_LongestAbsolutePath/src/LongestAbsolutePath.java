@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  Suppose we abstract our file system by a string in the following manner:
 
@@ -43,5 +47,48 @@ public class LongestAbsolutePath {
     public static void main(String[] args) {
         LongestAbsolutePath lap = new LongestAbsolutePath();
 
+        String [] inputs = {
+                "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext",
+                "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
+        };
+
+        lap.longestPath(inputs[1]);
+
+    }
+
+    public void longestPath(String input) {
+        String [] tokens = input.split("\n");
+
+        List<Node> list = new ArrayList<>();
+        for (String tok: tokens) {
+            Node node = new Node(tok);
+            list.add(node);
+        }
+
+        System.out.println(Arrays.toString(tokens));
+        System.out.println(list);
+    }
+}
+
+class Node {
+    String data;
+    int tabs;
+
+    public Node(String token) {
+        this.tabs = 0;
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<token.length(); i++) {
+            if (token.charAt(i) == '\t') {
+                ++this.tabs;
+            } else {
+                sb.append(token.charAt(i));
+            }
+        }
+        this.data = sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "[" + data + ", " + tabs + "]";
     }
 }
