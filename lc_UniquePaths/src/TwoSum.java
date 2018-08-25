@@ -19,6 +19,18 @@ import java.util.Map;
  =========================
  INPUT / OUTPUT
  =========================
+ input array: [2, 7, 11, 15]
+ result indices: [0, 1]
+ result values: 2, 7
+
+ input array: [3, 2, 4]
+ result indices: [1, 2]
+ result values: 2, 4
+
+ input array: [3, 3]
+ result indices: [0, 1]
+ result values: 3, 3
+
  */
 public class TwoSum {
 
@@ -33,9 +45,10 @@ public class TwoSum {
         int [] target = {9, 6, 6};
 
         for (int i=0; i<nums.length; i++) {
+            System.out.println("input array: " + Arrays.toString(nums[i]));
             int[] result = ts.twoSum(nums[i], target[i]);
-            System.out.println(Arrays.toString(result));
-            System.out.println(nums[i][result[0]] + ", " + nums[i][result[1]]);
+            System.out.println("result indices: " + Arrays.toString(result));
+            System.out.println("result values: " + nums[i][result[0]] + ", " + nums[i][result[1]]);
             System.out.println();
         }
 
