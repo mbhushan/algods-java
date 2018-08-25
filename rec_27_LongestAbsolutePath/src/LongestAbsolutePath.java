@@ -41,6 +41,21 @@ import java.util.Stack;
  Time complexity required: O(n) where n is the size of the input string.
 
  Notice that a/aa/aaa/file1.txt is not the longest file path, if there is another path aaaaaaaaaaaaaaaaaaaaa/sth.png.
+
+ =========================
+ INPUT / OUTPUT
+ =========================
+ input string: "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext"
+ tokens with tabs: [dir, 	subdir1, 	subdir2, 		file.ext]
+ list of path nodes: [[dir, 0], [subdir1, 1], [subdir2, 1], [file.ext, 2]]
+ longest path size: 3
+ longest path: dir/subdir2/file.ext
+
+ input string: "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
+ tokens with tabs: [dir, 	subdir1, 		file1.ext, 		subsubdir1, 	subdir2, 		subsubdir2, 			file2.ext]
+ list of path nodes: [[dir, 0], [subdir1, 1], [file1.ext, 2], [subsubdir1, 2], [subdir2, 1], [subsubdir2, 2], [file2.ext, 3]]
+ longest path size: 4
+ longest path: dir/subdir2/subsubdir2/file2.ext
  */
 
 public class LongestAbsolutePath {
