@@ -1,6 +1,8 @@
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
@@ -50,6 +52,17 @@ import java.util.Set;
  input: )(
  DFS result:
 
+ input: ()(((((((()
+ output BFS: [()()]
+ min removal: 7
+
+ input: ()(((((((()
+ DFS result: ()()
+
+ leetcode submission:
+ input: ()(((((((()
+ LC result: [()()]
+
  */
 
 public class InvalidParentheses {
@@ -57,7 +70,7 @@ public class InvalidParentheses {
     public static void main(String[] args) {
         InvalidParentheses ip = new InvalidParentheses();
 
-        String [] inputs = {"()())()", "(a)())()", ")("};
+        String [] inputs = {"()())()", "(a)())()", ")(", "()(((((((()"};
 
         for (String input:  inputs) {
             ip.removeParenBFS(input);
@@ -65,6 +78,11 @@ public class InvalidParentheses {
             ip.removeParenDFS(input);
             System.out.println();
         }
+
+
+        System.out.println("leetcode submission: ");
+        List<String> res = ip.removeInvalidParentheses("()(((((((()");
+        System.out.println("LC result: " + res);
 
 
     }
@@ -191,6 +209,71 @@ public class InvalidParentheses {
     }
 
     private boolean isValid(String input) {
+
+        int open = 0;
+        for (int i=0; i<input.length(); i++) {
+            if (input.charAt(i) == '(') {
+                ++open;
+            } else if (input.charAt(i) == ')') {
+                --open;
+            }
+
+            if (open < 0) {
+                return false;
+            }
+        }
+
+        return open == 0;
+    }
+
+
+    public List<String> removeInvalidParentheses(String s) {
+
+        String input = s;
+        if (input == null || input.length() < 1) {
+            return new ArrayList<>();
+        }
+
+
+
+        System.out.println("input: " + input);
+
+        Queue<String> queue = new LinkedList<String>();
+        Set<String> result = new HashSet<>();
+        int minEdit = Integer.MAX_VALUE;
+        boolean found = false;
+
+        queue.add(input);
+
+        while (!queue.isEmpty()) {
+            String str = queue.remove();
+
+            if (isValidString(str)) {
+                int edit = input.length() - str.length();
+                if (edit <= minEdit) {
+                    result.add(str);
+                    minEdit = edit;
+                }
+                found = true;
+            }
+
+            if (found) {
+                continue;
+            }
+
+            //level i removal
+            for (int i = 0; i < str.length(); i++) {
+                String tmp = str.substring(0, i) + str.substring(i + 1);
+                queue.add(tmp);
+            }
+        }
+
+        List<String> ans = new ArrayList(result);
+
+        return ans;
+    }
+
+    private boolean isValidString(String input) {
 
         int open = 0;
         for (int i=0; i<input.length(); i++) {
