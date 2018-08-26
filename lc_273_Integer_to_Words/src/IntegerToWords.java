@@ -22,6 +22,50 @@
  Input: 1234567891
  Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
 
+ ==================
+ INPUT / OUTPUT
+ ==================
+ Input number: 123
+ English: One Hundred Twenty Three
+
+ Input number: 345
+ English: Three Hundred Fourty Five
+
+ Input number: 567
+ English: Five Hundred Sixty Seven
+
+ Input number: 789
+ English: Seven Hundred Eighty Nine
+
+ Input number: 890
+ English: Eight Hundred Ninty
+
+ Input number: 101
+ English: One Hundred One
+
+ Input number: 100
+ English: One Hundred
+
+ Input number: 500
+ English: Five Hundred
+
+ Input number: 999
+ English: Nine Hundred Ninty Nine
+
+ Input number: 12
+ English: Twelve
+
+ Input number: 123
+ English: One Hundred Twenty Three
+
+ Input number: 12345
+ English: Twelve Thousand Three Hundred Fourty Five
+
+ Input number: 1234567
+ English: One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven
+
+ Input number: 1234567891
+ English: One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninty One
  */
 
 public class IntegerToWords {
