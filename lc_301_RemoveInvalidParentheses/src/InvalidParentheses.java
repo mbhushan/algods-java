@@ -29,6 +29,26 @@ import java.util.Set;
  ==================
  INPUT / OUTPUT
  ==================
+ input: ()())()
+ output BFS: [()()(), (())()]
+ min removal: 1
+
+ input: ()())()
+ DFS result: ()()() (())()
+
+ input: (a)())()
+ output BFS: [(a)()(), (a())()]
+ min removal: 1
+
+ input: (a)())()
+ DFS result: (a)()() (a())()
+
+ input: )(
+ output BFS: []
+ min removal: 2
+
+ input: )(
+ DFS result:
 
  */
 
@@ -40,8 +60,10 @@ public class InvalidParentheses {
         String [] inputs = {"()())()", "(a)())()", ")("};
 
         for (String input:  inputs) {
-            //ip.removeParenBFS(input);
+            ip.removeParenBFS(input);
+            //System.out.println();
             ip.removeParenDFS(input);
+            System.out.println();
         }
 
 
@@ -87,8 +109,6 @@ public class InvalidParentheses {
             }
         }
         System.out.println();
-
-
     }
 
     private void removeParenDFS(char [] A, int left, int right, int index, int open, Set<String> result,
@@ -132,6 +152,8 @@ public class InvalidParentheses {
             return;
         }
 
+        System.out.println("input: " + input);
+
         Queue<String> queue = new LinkedList<String>();
         Set<String> result = new HashSet<>();
         int minEdit = Integer.MAX_VALUE;
@@ -162,7 +184,7 @@ public class InvalidParentheses {
             }
         }
 
-        System.out.println("output: " + result);
+        System.out.println("output BFS: " + result);
         System.out.println("min removal: " + minEdit);
         System.out.println();
 
