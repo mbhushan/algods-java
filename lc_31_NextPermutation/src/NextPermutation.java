@@ -89,29 +89,6 @@ public class NextPermutation {
 
         }
 
-//        i = j;
-//
-//        int k = len-1;
-//
-//        System.out.println(nums[j] + ", " + nums[k]);
-//
-//        if (j != 0) {
-//            while (k > i && (nums[k] <= nums[i])) {
-//                --k;
-//            }
-//
-//            swap(nums, j, k);
-//            reverse(nums, j+1, k-1);
-//
-//        } else {
-//
-//            reverse(nums, j, k);
-//        }
-
-
-
-
-
         System.out.print(Arrays.toString(nums));
         System.out.println();
     }
