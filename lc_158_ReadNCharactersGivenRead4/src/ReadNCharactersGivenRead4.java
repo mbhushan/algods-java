@@ -44,7 +44,7 @@ import java.util.Random;
  char *buf is destination not source, similar to that of scanf("%s", buf), OJ outputs this buf value.
 
  Each time read() is called, we need to provide a new buf to store read characters, therefore, the return value of int read() is simply the length of buf.
- 
+
  ==================
  INPUT / OUTPUT
  ==================
