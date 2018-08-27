@@ -28,7 +28,13 @@ import java.util.List;
  INPUT / OUTPUT
  ===============
  sorted array: [-4, -1, -1, 0, 1, 2]
- result: [[-1, -1, 2], [-1, 0, 1]]
+ triplets with sum ZERO: [[-1, -1, 2], [-1, 0, 1]]
+
+ sorted array: [-2, 0, 0, 2, 2]
+ triplets with sum ZERO: [[-2, 0, 2]]
+
+ sorted array: [-4, -2, -2, -2, 0, 1, 2, 2, 2, 3, 3, 4, 4, 6, 6]
+ triplets with sum ZERO: [[-4, -2, 6], [-4, 0, 4], [-4, 1, 3], [-4, 2, 2], [-2, -2, 4], [-2, 0, 2]]
  */
 
 public class ThreeSum {
@@ -36,9 +42,16 @@ public class ThreeSum {
     public static void main(String[] args) {
         ThreeSum ts = new ThreeSum();
 
-        int [] A = {-1, 0, 1, 2, -1, -4};
+        int [][] A = {
+                {-1, 0, 1, 2, -1, -4},
+                {-2,0,0,2,2},
+                {-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6}
+        };
 
-        ts.threeSum(A);
+        for (int i=0; i<A.length; i++) {
+            ts.threeSum(A[i]);
+            System.out.println();
+        }
     }
 
     public List<List<Integer>> threeSum(int[] nums) {
@@ -72,13 +85,22 @@ public class ThreeSum {
                     Integer [] A = new Integer[] {nums[i], nums[j], nums[k]};
                     List<Integer> list = Arrays.asList(A);
                     result.add(list);
+
+                    while ((j < k) && nums[j] == nums[j+1]) {
+                        ++j;
+                    }
+
+                    while ((j < k) && nums[k] == nums[k-1]) {
+                        --k;
+                    }
                     ++j;
                     --k;
                 }
+
             }
         }
 
-        System.out.println("result: " + result);
+        System.out.println("triplets with sum ZERO: " + result);
 
 
         return result;
