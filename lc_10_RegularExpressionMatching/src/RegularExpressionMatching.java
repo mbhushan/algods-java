@@ -108,6 +108,39 @@
  0 1 1 1 0 0 0
  match: false
 
+ =======================================
+ input / output with recursive solution
+ ========================================
+ string: aa
+ pattern: a
+ DP Match: false
+ Rec Match: false
+
+ string: aab
+ pattern: c*a*b
+ DP Match: true
+ Rec Match: true
+
+ string: aa
+ pattern: a*
+ DP Match: true
+ Rec Match: true
+
+ string: ab
+ pattern: .*
+ DP Match: true
+ Rec Match: true
+
+ string: mississippi
+ pattern: mis*is*p*.
+ DP Match: false
+ Rec Match: false
+
+ string: a
+ pattern: .*..a*
+ DP Match: false
+ Rec Match: false
+
  */
 public class RegularExpressionMatching {
 
