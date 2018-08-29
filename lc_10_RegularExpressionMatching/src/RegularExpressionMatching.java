@@ -47,6 +47,67 @@
  s = "mississippi"
  p = "mis*is*p*."
  Output: false
+
+ ======================================
+            INPUT / OUTPUT
+ ======================================
+ string: aa
+ pattern: a
+ DP Matrix:
+ 1 0
+ 0 1
+ 0 0
+ match: false
+
+ string: aab
+ pattern: c*a*b
+ DP Matrix:
+ 1 0 1 0 1 0
+ 0 0 0 1 1 0
+ 0 0 0 0 1 0
+ 0 0 0 0 0 1
+ match: true
+
+ string: aa
+ pattern: a*
+ DP Matrix:
+ 1 0 1
+ 0 1 1
+ 0 0 1
+ match: true
+
+ string: ab
+ pattern: .*
+ DP Matrix:
+ 1 0 1
+ 0 1 1
+ 0 0 1
+ match: true
+
+ string: mississippi
+ pattern: mis*is*p*.
+ DP Matrix:
+ 1 0 0 0 0 0 0 0 0 0 0
+ 0 1 0 0 0 0 0 0 0 0 0
+ 0 0 1 0 1 0 0 0 0 0 0
+ 0 0 0 1 1 0 0 0 0 0 0
+ 0 0 0 0 1 0 0 0 0 0 0
+ 0 0 0 0 0 1 0 1 0 1 0
+ 0 0 0 0 0 0 1 1 0 1 1
+ 0 0 0 0 0 0 0 1 0 1 1
+ 0 0 0 0 0 0 0 0 0 0 1
+ 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0
+ match: false
+
+ string: a
+ pattern: .*..a*
+ DP Matrix:
+ 1 0 1 0 0 0 0
+ 0 1 1 1 0 0 0
+ match: false
+
  */
 public class RegularExpressionMatching {
 
@@ -75,10 +136,25 @@ public class RegularExpressionMatching {
             System.out.println("string: " + S[i]);
             System.out.println("pattern: " + P[i]);
             boolean ans = rem.isMatch(S[i], P[i]);
-            System.out.println("match: " + ans);
+            System.out.println("DP Match: " + ans);
+            System.out.println("Rec Match: " + rem.isMatchRec(S[i], P[i]));
             System.out.println();
         }
 
+    }
+
+    public boolean isMatchRec(String s, String p) {
+        if (p.isEmpty()) {
+            return s.isEmpty();
+        }
+
+        boolean first_flag = (!s.isEmpty() && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.'));
+
+        if (p.length() >= 2 && p.charAt(1) == '*') {
+            return (isMatch(s, p.substring(2))) || (first_flag && isMatchRec(s.substring(1), p));
+        } else {
+            return (first_flag && isMatchRec(s.substring(1), p.substring(1)));
+        }
     }
 
 
@@ -118,7 +194,8 @@ public class RegularExpressionMatching {
         }
 
         //print the DP matrix
-        printMatrix(T);
+        //System.out.println("DP Matrix: ");
+        //printMatrix(T);
 
         return T[sLen][pLen];
     }
