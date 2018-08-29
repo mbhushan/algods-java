@@ -53,12 +53,89 @@ public class RegularExpressionMatching {
     public static void main(String [] args) {
         RegularExpressionMatching rem = new RegularExpressionMatching();
 
+        String [] S = {
+                "aa",
+                "aab",
+                "aa",
+                "ab",
+                "mississippi",
+                "a"
+        };
+
+        String [] P = {
+                "a",
+                "c*a*b",
+                "a*",
+                ".*",
+                "mis*is*p*.",
+                ".*..a*"
+        };
+
+        for (int i=0; i<S.length; i++) {
+            System.out.println("string: " + S[i]);
+            System.out.println("pattern: " + P[i]);
+            boolean ans = rem.isMatch(S[i], P[i]);
+            System.out.println("match: " + ans);
+            System.out.println();
+        }
+
     }
 
 
     public boolean isMatch(String s, String p) {
 
+        if (s == null || p == null) {
+            return false;
+        }
 
-        return false;
+        int sLen = s.length();
+        int pLen = p.length();
+
+        boolean [][] T = new boolean[sLen+1][pLen+1];
+
+        T[0][0] = true;
+
+        for (int i=1; i<T[0].length; i++) {
+            if (i > 1 && p.charAt(i-1) == '*') {
+                T[0][i] = T[0][i-2];
+            }
+//            else if (p.charAt(i-1) == '.') {
+//                T[0][i] = T[0][i-1];
+//            }
+        }
+
+        for (int i=1; i<=sLen; i++) {
+            for (int j=1; j<=pLen; j++) {
+                if (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1)  == '.') {
+                    T[i][j] = T[i-1][j-1];
+                } else if (p.charAt(j-1) == '*') {
+                    T[i][j] = T[i][j-2];
+                    if (p.charAt(j-2) == '.' || s.charAt(i-1) == p.charAt(j-2)) {
+                        T[i][j] = T[i][j] || T[i-1][j];
+                    }
+                }
+            }
+        }
+
+        //print the DP matrix
+        printMatrix(T);
+
+        return T[sLen][pLen];
+    }
+
+    public void printMatrix(boolean [][] M) {
+        int row = M.length;
+        int col = M[0].length;
+
+        for (int i=0; i<row; i++) {
+            for (int j=0; j<col; j++) {
+               if (M[i][j]) {
+                   System.out.print(1 + " ");
+               } else {
+                   System.out.print(0 + " ");
+               }
+            }
+            System.out.println();
+        }
     }
 }
