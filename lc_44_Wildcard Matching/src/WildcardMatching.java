@@ -91,6 +91,7 @@ public class WildcardMatching {
                 "cb",
                 "adceb",
                 "acdcb",
+                "aab"
         };
 
         String [] P = {
@@ -98,7 +99,8 @@ public class WildcardMatching {
                 "*",
                 "?a",
                 "*a*b",
-                "a*c?b"
+                "a*c?b",
+                "c*a*b"
         };
 
         for (int i = 0; i < S.length; i++) {
