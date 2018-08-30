@@ -14,6 +14,23 @@
  Note: It is intended for the problem statement to be ambiguous.
  You should gather all requirements up front before implementing one.
 
+ ======================================
+ INPUT / OUTPUT
+ ======================================
+ input: 0
+ true
+
+ input: 0.1
+ true
+
+ input: abc
+ false
+
+ input: 1 a
+ false
+
+ input: 2e10
+ true
  */
 
 public class ValidNumber {
