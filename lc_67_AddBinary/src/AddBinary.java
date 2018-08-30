@@ -15,6 +15,16 @@
  Input: a = "1010", b = "1011"
  Output: "10101"
 
+ ======================================
+ INPUT / OUTPUT
+ ======================================
+
+ input: 11, 1
+ sum: 100
+
+ input: 1010, 1011
+ sum: 10101
+
  */
 
 public class AddBinary {
@@ -27,7 +37,8 @@ public class AddBinary {
 
         for (int i=0; i<a.length; i++) {
             System.out.println("input: " + a[i] + ", " + b[i]);
-            System.out.println(ab.addBinary(a[i], b[i]));
+            System.out.println("sum: " + ab.addBinary(a[i], b[i]));
+            System.out.println();
         }
 
     }
