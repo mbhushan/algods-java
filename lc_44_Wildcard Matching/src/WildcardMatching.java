@@ -48,6 +48,35 @@
  s = "acdcb"
  p = "a*c?b"
  Output: false
+
+ ========================
+ INPUT / OUTPUT
+ ========================
+ string: aa
+ pattern: a
+ DP match: false
+ Rec match: false
+
+ string: aa
+ pattern: *
+ DP match: true
+ Rec match: true
+
+ string: cb
+ pattern: ?a
+ DP match: false
+ Rec match: false
+
+ string: adceb
+ pattern: *a*b
+ DP match: true
+ Rec match: true
+
+ string: acdcb
+ pattern: a*c?b
+ DP match: false
+ Rec match: false
+
  */
 
 
@@ -75,10 +104,32 @@ public class WildcardMatching {
         for (int i = 0; i < S.length; i++) {
             System.out.println("string: " + S[i]);
             System.out.println("pattern: " + P[i]);
-            System.out.println("is match: " + wm.isMatch(S[i], P[i]));
+            System.out.println("DP match: " + wm.isMatch(S[i], P[i]));
+            System.out.println("Rec match: " + wm.isMatchRec(S[i], P[i]));
             System.out.println();
         }
 
+    }
+
+    public boolean isMatchRec(String s, String p) {
+        if (p.isEmpty()) {
+            return s.isEmpty();
+        }
+
+        if (p.length()==1 && s.length() == 1 && p.charAt(0) == '*') {
+            return true;
+        }
+
+        boolean flag = (!s.isEmpty()) && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '?');
+
+        if (p.length()>=1 && s.length() >= 1 && p.charAt(0) == '*') {
+            return isMatchRec(s.substring(1), p) || isMatchRec(s, p.substring(1));
+        }
+        if (p.length() >= 2 && p.charAt(1) == '*') {
+            return (flag && isMatchRec(s.substring(1), p)) || isMatchRec(s, p.substring(1));
+        } else {
+            return flag && isMatchRec(s.substring(1), p.substring(1));
+        }
     }
 
     public boolean isMatch(String s, String p) {
