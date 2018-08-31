@@ -30,6 +30,16 @@ import java.util.Arrays;
  Input: [7,6,4,3,1]
  Output: 0
  Explanation: In this case, no transaction is done, i.e. max profit = 0.
+
+ =================
+ input / output
+ =================
+ input: [7, 1, 5, 3, 6, 4]
+ max profit: 7
+ input: [7, 6, 4, 3, 1]
+ max profit: 0
+ input: [1, 2, 3, 4, 5]
+ max profit: 4
  */
 
 public class BuySellStock2 {
