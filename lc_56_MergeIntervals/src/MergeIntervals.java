@@ -38,9 +38,9 @@ public class MergeIntervals {
         for (int i=0; i<starts.length; i++) {
             intervals.add(new Interval(starts[i], ends[i]));
         }
+        System.out.println();
 
         System.out.println("input intervals: " + intervals);
-
         mi.merge(intervals);
 
 
