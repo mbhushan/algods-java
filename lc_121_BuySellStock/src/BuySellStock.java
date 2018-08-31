@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
 
  121. Best Time to Buy and Sell Stock
@@ -28,10 +30,38 @@ public class BuySellStock {
     public static void main(String [] args) {
         BuySellStock bs = new BuySellStock();
 
+        int [][] A = {
+                {7,1,5,3,6,4},
+                {7,6,4,3,1}
+        };
+
+        for (int i=0; i<A.length; i++) {
+            System.out.println("input: " + Arrays.toString(A[i]));
+            System.out.println("max profit: " + bs.maxProfit(A[i]));
+        }
+
     }
 
     public int maxProfit(int[] prices) {
 
-        return 0;
+        if (prices == null || prices.length <= 1) {
+            return 0;
+        }
+
+        int min = prices[0];
+        int maxProfit = 0;
+
+        for (int i=1; i<prices.length; i++) {
+            int diff = prices[i] - min;
+            if (diff > maxProfit) {
+                maxProfit = diff;
+            }
+            if (prices[i] < min) {
+                min = prices[i];
+            }
+
+        }
+
+        return maxProfit;
     }
 }
