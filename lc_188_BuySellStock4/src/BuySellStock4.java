@@ -24,6 +24,65 @@ import java.util.Arrays;
  Output: 7
  Explanation: Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-2 = 4.
  Then buy on day 5 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
+
+ ==============
+ INPUT / OUTPUT
+ ==============
+ input: [2, 4, 1]
+ DP Matrix:
+ 0 0 0
+ 0 2 2
+ 0 2 2
+ max profit: 2
+
+ input: [3, 2, 6, 5, 0, 3]
+ DP Matrix:
+ 0 0 0 0 0 0
+ 0 0 4 4 4 4
+ 0 0 4 4 4 7
+ max profit: 7
+
+ input: [1, 4, 5, 7, 6, 3, 2, 9]
+ DP Matrix:
+ 0 0 0 0 0 0 0 0
+ 0 3 4 6 6 6 6 8
+ 0 3 4 6 6 6 6 13
+ max profit: 13
+
+ input: [3, 3, 5, 0, 0, 3, 1, 4]
+ DP Matrix:
+ 0 0 0 0 0 0 0 0
+ 0 0 2 2 2 3 3 4
+ 0 0 2 2 2 5 5 6
+ max profit: 6
+
+ input: [1, 2, 3, 4, 5]
+ DP Matrix:
+ 0 0 0 0 0
+ 0 1 2 3 4
+ 0 1 2 3 4
+ max profit: 4
+
+ input: [7, 1, 5, 3, 6, 4]
+ DP Matrix:
+ 0 0 0 0 0 0
+ 0 0 4 4 5 5
+ 0 0 4 4 7 7
+ max profit: 7
+
+ input: [7, 6, 4, 3, 1]
+ DP Matrix:
+ 0 0 0 0 0
+ 0 0 0 0 0
+ 0 0 0 0 0
+ max profit: 0
+
+ input: [1, 2, 3, 4, 5]
+ DP Matrix:
+ 0 0 0 0 0
+ 0 1 2 3 4
+ 0 1 2 3 4
+ max profit: 4
  */
 
 public class BuySellStock4 {
