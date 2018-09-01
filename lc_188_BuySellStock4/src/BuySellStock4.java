@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
 
  188. Best Time to Buy and Sell Stock IV
@@ -29,10 +31,64 @@ public class BuySellStock4 {
     public static void main(String[] args) {
         BuySellStock4 bs = new BuySellStock4();
 
+        int [][] A = {
+                {2,4,1},
+                {3,2,6,5,0,3},
+                {1, 4, 5, 7, 6, 3, 2, 9},
+                {3,3,5,0,0,3,1,4},
+                {1,2,3,4,5},
+                {7,1,5,3,6,4},
+                {7,6,4,3,1},
+                {1,2,3,4,5}
+        };
+
+        int k = 2;
+
+        for (int i=0; i<A.length; i++) {
+            System.out.println("input: " + Arrays.toString(A[i]));
+            System.out.println("max profit: " + bs.maxProfit(k, A[i]));
+            System.out.println();
+        }
     }
 
     public int maxProfit(int k, int[] prices) {
 
-        return 0;
+        if (prices == null || prices.length <= 1) {
+            return 0;
+        }
+
+        int [][] T = new int[k+1][prices.length];
+
+        for (int i=0; i<T.length; i++) {
+            for (int j=0; j<T[0].length; j++) {
+                if (i == 0 || j == 0) {
+                    T[i][j] = 0;
+                } else {
+                    T[i][j] = T[i][j-1]; //no transaction on jth day.
+                    for (int m=0; m <= j-1; m++) { //transacting on mth day.
+                        T[i][j] = Math.max(T[i][j], T[i-1][m] + prices[j] - prices[m]);
+                    }
+                }
+            }
+        }
+
+        System.out.println("DP Matrix: ");
+        printMatrix(T);
+        System.out.println();
+
+
+        return T[k][prices.length-1];
+    }
+
+    public void printMatrix(int [][] M) {
+        int row = M.length;
+        int col = M[0].length;
+
+        for (int i=0; i<row; i++) {
+            for (int j=0; j<col; j++) {
+                System.out.print(M[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
