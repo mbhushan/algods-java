@@ -16,6 +16,29 @@ import java.util.Arrays;
  Input: [1,2,3,0,2]
  Output: 3
  Explanation: transactions = [buy, sell, cooldown, buy, sell]
+
+
+ =================
+ INPUT / OUTPUT
+ =================
+
+ input: [1, 4, 5, 7, 6, 3, 2, 9]
+ max profit: 13
+
+ input: [3, 3, 5, 0, 0, 3, 1, 4]
+ max profit: 6
+
+ input: [1, 2, 3, 4, 5]
+ max profit: 4
+
+ input: [7, 1, 5, 3, 6, 4]
+ max profit: 5
+
+ input: [7, 6, 4, 3, 1]
+ max profit: 0
+
+ input: [1, 2, 3, 4, 5]
+ max profit: 4
  */
 
 public class BuySellStockCooldown {
