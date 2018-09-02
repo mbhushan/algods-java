@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -26,6 +29,15 @@ import java.util.Stack;
 
  as "[1,2,3,null,null,4,5]"
 
+ Example binary tree
+
+             8
+         /       \
+        3        10
+       / \      /  \
+      1   6     9   14
+         /  \      /
+        4   7     13
  ==============
  INPUT / OUTPUT
  ==============
@@ -39,16 +51,30 @@ public class SerializeDeserialize {
     public static void main(String[] args) {
         SerializeDeserialize sd = new SerializeDeserialize();
 
-        sd.builtBT();
+        int [] A = {8, 3, 10, 1, 6, 9, 14,  4, 7, 13};
 
-        sd.serialize();
+        sd.buildBST(A);
+        String data = sd.serialize();
+        sd.deserializeTree(data);
 
 
 
     }
 
-    public void serialize() {
-        serialize(this.root);
+    public String serialize() {
+        String tree = serialize(this.root);
+        System.out.println("serialized binary tree: ");
+        System.out.println(tree);
+
+        return tree;
+    }
+
+    public void deserializeTree(String data) {
+        TreeNode node = deserialize(data);
+
+        System.out.println();
+        System.out.println("post deserialization - inorder traversal: ");
+        inorder(node);
     }
 
     public void builtBT() {
@@ -60,8 +86,44 @@ public class SerializeDeserialize {
         this.root.right.right = new TreeNode(5);
     }
 
-    // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
+
+        List<String> result = new ArrayList<>();
+
+        serializePreorder(root, result);
+
+        //System.out.println(result);
+
+        return String.join(",", result);
+    }
+
+    private void serializePreorder(TreeNode node,  List<String> result) {
+        if (node == null) {
+            return;
+        }
+
+        result.add(String.valueOf(node.val));
+
+        if (node.left != null) {
+            serializePreorder(node.left, result);
+        } else {
+            result.add("#");
+        }
+
+
+        if (node.right != null) {
+            serializePreorder(node.right, result);
+        } else {
+            result.add("#");
+        }
+
+    }
+
+    // Encodes a tree to a single string.
+    public String serializeOld(TreeNode root) {
+
+        //DOES NOT serialize in proper preorder way.
+
         List<String> result = new ArrayList<>();
 
         //do preorder iterative.
@@ -75,28 +137,98 @@ public class SerializeDeserialize {
                 if (node.right != null) {
                     stack.push(node.right);
                 } else {
-                    result.add("null");
+                    result.add("#");
                 }
                 node = node.left;
             }
 
             if (node == null) {
-                result.add("null");
+                result.add("#");
                 if (!stack.isEmpty()) {
                     node = stack.pop();
                 }
             }
         }
         System.out.println();
-
+        System.out.println("preorder serialization: ");
         System.out.println(result);
 
-        return null;
+        return String.join(",", result);
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        return null;
+
+        if (data == null || data.length() < 1) {
+            return null;
+        }
+
+        Queue<String> queue = new LinkedList<>();
+
+        List<String> list = Arrays.asList(data.split(","));
+        ((LinkedList<String>) queue).addAll(list);
+
+        TreeNode node = deserialize(queue);
+
+        return node;
+    }
+
+    private TreeNode deserialize(Queue<String> queue) {
+        if (queue.isEmpty()) {
+            return null;
+        }
+        String s = queue.poll();
+
+        if (s.equals("#")) {
+            return null;
+        } else {
+            TreeNode node = new TreeNode(Integer.valueOf(s));
+            node.left = deserialize(queue);
+            node.right = deserialize(queue);
+
+            return node;
+        }
+    }
+
+    public void inorder(TreeNode node) {
+
+        Stack<TreeNode> stack = new Stack<>();
+
+        while (!stack.isEmpty() || node != null) {
+
+            if (node == null) {
+                node = stack.pop();
+                System.out.print(node.val + " ");
+                node = node.right;
+            }
+
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
+    }
+
+    public void buildBST(int [] A) {
+        if (A == null) {
+            return;
+        }
+
+        for (int i=0; i<A.length; i++) {
+            this.root = insertIntoBST(this.root, A[i]);
+        }
+    }
+
+    public TreeNode insertIntoBST(TreeNode node, int data) {
+        if (node == null) {
+            return new TreeNode(data);
+        }
+        if (data <= node.val) {
+            node.left = insertIntoBST(node.left, data);
+        } else {
+            node.right = insertIntoBST(node.right, data);
+        }
+        return node;
     }
 }
 
