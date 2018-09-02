@@ -17,7 +17,15 @@ import java.util.Arrays;
  If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach,
  which is more subtle.
 
+ ==============
+ INPUT / OUTPUT
+ ==============
 
+ input: [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+ max sum: 6
+
+ input: [4, -1, 2, 1]
+ max sum: 6
  */
 public class MaximumSubarray {
 
