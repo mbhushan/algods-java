@@ -41,6 +41,11 @@ import java.util.Stack;
  ==============
  INPUT / OUTPUT
  ==============
+ serialized binary tree:
+ 8,3,1,#,#,6,4,#,#,7,#,#,10,9,#,#,14,13,#,#,#
+
+ post deserialization - inorder traversal:
+ 1 3 4 6 7 8 9 10 13 14
 
  */
 
@@ -87,6 +92,10 @@ public class SerializeDeserialize {
     }
 
     public String serialize(TreeNode root) {
+
+        if (root == null) {
+            return null;
+        }
 
         List<String> result = new ArrayList<>();
 
