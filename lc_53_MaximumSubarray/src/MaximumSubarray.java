@@ -39,6 +39,22 @@ public class MaximumSubarray {
     }
 
     public int maxSubArray(int[] nums) {
-        return 0;
+
+        if (nums == null || nums.length < 1) {
+            return 0;
+        }
+
+        int sum = 0;
+        int maxSum = Integer.MIN_VALUE;
+
+        for (int i=0; i<nums.length; i++) {
+            sum += nums[i];
+            sum = Math.max(sum, nums[i]);
+            if (sum > maxSum) {
+                maxSum = sum;
+            }
+        }
+
+        return maxSum;
     }
 }
