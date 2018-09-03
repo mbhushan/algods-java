@@ -24,6 +24,8 @@ public class BSTDoublyLinkedList {
 
         int [] A = {8, 3, 10, 1, 6, 9, 14,  4, 7, 13};
 
+        //int [] A = {4, 2, 5, 1, 3};
+
         bst.buildBST(A);
 
         bst.inorder();
