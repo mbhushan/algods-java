@@ -7,6 +7,12 @@ import java.util.Stack;
  Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.
  Calling next() will return the next smallest number in the BST.
  Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
+
+ ==============
+ INPUT / OUTPUT
+ ==============
+ inorder traversal of binary search tree:
+ 1 3 4 6 7 8 9 10 13 14
  */
 
 public class BSTIteratorClient {
@@ -33,6 +39,7 @@ public class BSTIteratorClient {
     public void bstIterDemo() {
         BSTIterator bst = new BSTIterator(this.root);
 
+        System.out.println("inorder traversal of binary search tree: ");
         while (bst.hasNext()) {
             System.out.print(bst.next() + " ");
         }
