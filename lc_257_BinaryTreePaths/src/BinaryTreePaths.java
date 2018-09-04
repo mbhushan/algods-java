@@ -57,6 +57,10 @@ public class BinaryTreePaths {
         List<String> path = new ArrayList<>();
         List<String> result = new ArrayList<>();
 
+        if (root == null) {
+            return result;
+        }
+
         binaryTreePaths(root, path, result);
 
         System.out.println("Binary Tree Paths: ");
