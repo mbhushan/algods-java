@@ -16,6 +16,16 @@ import java.util.Set;
 
  Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
  Output: [9,4]
+
+ ===============
+ INPUT / OUTPUT
+ ===============
+ A: [1, 2, 2, 1]
+ B: [2, 2]
+ intersection: [2]
+ A: [4, 9, 5]
+ B: [9, 4, 9, 8, 4]
+ intersection: [4, 9]
  */
 
 public class IntersectionArrays {
