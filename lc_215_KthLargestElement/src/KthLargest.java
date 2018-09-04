@@ -20,6 +20,15 @@ import java.util.PriorityQueue;
  Note:
  You may assume k is always valid, 1 ≤ k ≤ array's length.
 
+ =======================
+ INPUT / OUTPUT
+ =======================
+ input: [3, 2, 1, 5, 6, 4]
+ PQ: [5, 6]
+ ans: 5
+ input: [3, 2, 3, 1, 2, 4, 5, 5, 6]
+ PQ: [4, 5, 5, 6]
+ ans: 4
  */
 
 public class KthLargest {
