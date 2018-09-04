@@ -27,6 +27,8 @@ import java.util.List;
  ===============
  INPUT / OUTPUT
  ===============
+ Binary Tree Paths:
+ [1->2->5, 1->3]
 
  */
 public class BinaryTreePaths {
@@ -57,6 +59,7 @@ public class BinaryTreePaths {
 
         binaryTreePaths(root, path, result);
 
+        System.out.println("Binary Tree Paths: ");
         System.out.println(result);
 
         return result;
