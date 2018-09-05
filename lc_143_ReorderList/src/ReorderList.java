@@ -42,9 +42,25 @@ public class ReorderList {
         printList(this.head);
 
         this.head = reverseList(this.head);
+        //this.head = reverseListRec(this.head);
 
         System.out.println("reversed list: ");
         printList(this.head);
+
+        int i = 1;
+        ListNode node = this.head;
+        while (i-- > 0) {
+            node = node.next;
+        }
+
+        System.out.println("List1: ");
+        printList(node);
+
+        node.next = reverseList(node.next);
+
+        System.out.println("List: ");
+        printList(this.head);
+
     }
 
     public void printList(ListNode node) {
@@ -88,6 +104,11 @@ public class ReorderList {
         ListNode curr = node.next;
         ListNode prev = node;
         prev.next = null;
+
+        ListNode rest = reverseListRec(curr);
+        curr.next = prev;
+
+        return rest;
 
     }
 
