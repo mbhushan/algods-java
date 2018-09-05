@@ -16,6 +16,7 @@
 
  Note: There will be exactly one celebrity if he/she is in the party. Return the celebrity's label
  if there is a celebrity in the party. If there is no celebrity, return -1.
+
  */
 
 public class FindCelebrity {
