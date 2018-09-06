@@ -87,18 +87,19 @@ public class CloneGraph {
 
         hmap.put(node, clonedStartNode);
 
-        for (UndirectedGraphNode neighbor: node.neighbors) {
-            UndirectedGraphNode clonedNode = null;
-            if (hmap.containsKey(neighbor)) {
-                clonedNode = hmap.get(neighbor);
-            } else {
-                clonedNode = new UndirectedGraphNode(neighbor.label);
-                hmap.put(neighbor, clonedNode);
-            }
-
-            clonedStartNode.neighbors.add(clonedNode);
-        }
+//        for (UndirectedGraphNode neighbor: node.neighbors) {
+//            UndirectedGraphNode clonedNode = null;
+//            if (hmap.containsKey(neighbor)) {
+//                clonedNode = hmap.get(neighbor);
+//            } else {
+//                clonedNode = new UndirectedGraphNode(neighbor.label);
+//                hmap.put(neighbor, clonedNode);
+//            }
+//
+//            clonedStartNode.neighbors.add(clonedNode);
+//        }
         visited.add(clonedStartNode.label);
+        queue.add(node);
 
         while (!queue.isEmpty()) {
 
