@@ -1,8 +1,11 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  133. Clone Graph
@@ -46,14 +49,83 @@ public class CloneGraph {
         };
 
         cg.buildGraph(inputs[0], 3);
+
         cg.printGraph();
+
+        cg.cloneGraph();
+
+
+    }
+
+    public void cloneGraph() {
+
+        System.out.println("cloning graph: ");
+        cloneGraph(startNode);
+        System.out.println("printing cloned graph: ");
+        printGraph(clonedStartNode);
+
+    }
+
+    public void printGraph() {
+        printGraph(startNode);
+        System.out.println();
+
 
     }
 
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
 
+        if (node == null) {
+            return node;
+        }
 
-        return null;
+        clonedStartNode = new UndirectedGraphNode(node.label);
+
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        HashMap<UndirectedGraphNode, UndirectedGraphNode> hmap = new HashMap<>();
+        Set<Integer> visited = new HashSet<>();
+
+        hmap.put(node, clonedStartNode);
+
+        for (UndirectedGraphNode neighbor: node.neighbors) {
+            UndirectedGraphNode clonedNode = null;
+            if (hmap.containsKey(neighbor)) {
+                clonedNode = hmap.get(neighbor);
+            } else {
+                clonedNode = new UndirectedGraphNode(neighbor.label);
+                hmap.put(neighbor, clonedNode);
+            }
+
+            clonedStartNode.neighbors.add(clonedNode);
+        }
+        visited.add(clonedStartNode.label);
+
+        while (!queue.isEmpty()) {
+
+            UndirectedGraphNode newNode = queue.remove();
+
+            UndirectedGraphNode cloneNode = hmap.getOrDefault(newNode, new UndirectedGraphNode(newNode.label));
+
+            for (UndirectedGraphNode neighbor: newNode.neighbors) {
+                UndirectedGraphNode cNode = null;
+                if (hmap.containsKey(neighbor)) {
+                    cNode = hmap.get(neighbor);
+                } else {
+                    cNode = new UndirectedGraphNode(neighbor.label);
+                    hmap.put(neighbor, cNode);
+                }
+
+                cloneNode.neighbors.add(cNode);
+
+                if (!visited.contains(neighbor.label)) {
+                    queue.add(neighbor);
+                    visited.add(neighbor.label);
+                }
+            }
+
+        }
+
+        return clonedStartNode;
     }
 
     public void buildGraph(String input, int nVertices) {
@@ -79,7 +151,7 @@ public class CloneGraph {
         }
     }
 
-    private void printGraph() {
+    private void printGraph(UndirectedGraphNode sNode) {
         if (startNode == null) {
             return;
         }
@@ -87,8 +159,8 @@ public class CloneGraph {
         boolean [] visited = new boolean[numVertices];
         Queue<UndirectedGraphNode> queue = new LinkedList<>();
 
-        queue.add(startNode);
-        visited[startNode.label] = true;
+        queue.add(sNode);
+        visited[sNode.label] = true;
 
         while (!queue.isEmpty()) {
             UndirectedGraphNode node = queue.remove();
