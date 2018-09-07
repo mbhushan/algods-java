@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  560. Subarray Sum Equals K
@@ -28,7 +30,15 @@ public class SubarraySumK {
                 2, 7
         };
 
-        ss.subarraySum(A[0], k[0]);
+        for (int i=0; i<A.length; i++) {
+
+            System.out.println("input: " + Arrays.toString(A[i]));
+            System.out.println("K: " + k[i]);
+            System.out.println("slow: " + ss.subarraySum(A[i], k[i]));
+            System.out.println("fast: " + ss.subarraySumFast(A[i], k[i]));
+            System.out.println();
+            System.out.println();
+        }
 
     }
 
@@ -45,7 +55,7 @@ public class SubarraySumK {
 
         int count = 0;
 
-        System.out.println("sums: " + Arrays.toString(sums));
+       // System.out.println("sums: " + Arrays.toString(sums));
 
         for (int i=0; i<nums.length; i++) {
             for (int j=i+1; j<=nums.length; j++) {
@@ -57,9 +67,31 @@ public class SubarraySumK {
             }
         }
 
-        System.out.println("count: " + count);
+       // System.out.println("count: " + count);
 
         return count;
 
+    }
+
+    public int subarraySumFast(int[] nums, int k) {
+
+        Map<Integer, Integer> hmap = new HashMap<>();
+
+        int sum = 0;
+        int count = 0;
+        hmap.put(0, 1);
+
+        for (int i=0; i<nums.length; i++) {
+            sum += nums[i];
+
+            hmap.put(sum, hmap.getOrDefault(sum, 0) + 1);
+
+            if (hmap.containsKey(sum - k)) {
+                count += hmap.get(sum-k);
+            }
+        }
+       // System.out.println("hmap: " + hmap);
+
+        return count;
     }
 }
