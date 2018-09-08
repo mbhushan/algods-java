@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
 
 
@@ -38,6 +40,8 @@ public class BSTValidation {
     public static void main(String [] args) {
         BSTValidation bst = new BSTValidation();
 
+        System.out.println("integer max: " + Integer.MAX_VALUE);
+
         bst.buildTree1();
         bst.buildTree2();
 
@@ -62,6 +66,14 @@ public class BSTValidation {
         System.out.println("is BST: " + isValidBSTMinMax(root, Integer.MIN_VALUE, Integer.MAX_VALUE));
     }
 
+    public boolean isValid(TreeNode root, Integer min, Integer max) {
+        if(root == null) return true;
+        if(min != null && root.val <= min) return false;
+        if(max != null && root.val >= max) return false;
+
+        return isValid(root.left, min, root.val) && isValid(root.right, root.val, max);
+    }
+
     private boolean isValidBSTMinMax(TreeNode node, int min, int max) {
         if (node == null) {
             return true;
@@ -73,6 +85,32 @@ public class BSTValidation {
 
         return isValidBSTMinMax(node.left, min, node.val-1) &&
                 isValidBSTMinMax(node.right, node.val+1, max);
+    }
+
+    public boolean isBSTInorder(TreeNode node) {
+        if (node == null) {
+            return true;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        Integer prev = null;
+
+        while (!stack.isEmpty() || node != null) {
+
+            if (node == null) {
+                node = stack.pop();
+                if (prev != null && node.val <= prev) {
+                    return false;
+                }
+                prev = node.val;
+                node = node.right;
+            }
+
+            if (node != null) {
+                node = node.left;
+            }
+        }
+        return true;
     }
 
     public void buildTree1() {
