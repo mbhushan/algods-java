@@ -35,6 +35,16 @@
  Follow up:
  What if the number of hits per second could be very large? Does your design scale?
 
+ ==============
+ INPUT / OUTPUT
+ ==============
+ hit: 3
+ hit: 4
+ hit: 3
+
+ One more potential solution:
+ https://github.com/mbhushan/codique/blob/master/QPSCounter/src/QPSCounter.java
+
 
  */
 public class HitCounter {
