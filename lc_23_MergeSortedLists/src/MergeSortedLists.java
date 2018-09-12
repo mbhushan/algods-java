@@ -1,3 +1,6 @@
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
  23. Merge k Sorted Lists
  https://leetcode.com/problems/merge-k-sorted-lists/description/
@@ -13,6 +16,16 @@
  2->6
  ]
  Output: 1->1->2->3->4->4->5->6
+
+ ================
+ INPUT / OUTPUT
+ ================
+ 1 4 5
+ 1 3 4
+ 2 6
+ pq: [[ index:0; node: 1], [ index:1; node: 1], [ index:2; node: 2]]
+ printing result:
+ 1->1->2->3->4->4->5->6->null
 
  */
 
@@ -37,6 +50,71 @@ public class MergeSortedLists {
         ms.init();
         ms.printLists();
 
+        ms.merge();
+
+    }
+
+    public void merge() {
+        mergeKLists(lists);
+    }
+
+    public ListNode mergeKLists(ListNode[] lists) {
+
+        if (lists == null) {
+            return null;
+        }
+
+        if (lists.length < 1) {
+            return null;
+        }
+
+        if (lists.length == 1) {
+            return lists[0];
+        }
+
+        ListNode head = null;
+
+        //init pq and put initial elements.
+        PriorityQueue<PQNode> pq = new PriorityQueue<PQNode>(10, new NodeComparator());
+        for (int i=0; i<lists.length; i++) {
+            if (lists[i] != null) {
+                pq.add(new PQNode(i, lists[i]));
+            }
+        }
+
+        System.out.println("pq: " + pq);
+
+        ListNode curr = null;
+        while (!pq.isEmpty()) {
+            PQNode pqNode = pq.remove();
+            int index = pqNode.index;
+
+            if (head == null) {
+                head = pqNode.node;
+                curr = head;
+            } else {
+                curr.next = pqNode.node;
+                curr = curr.next;
+            }
+
+            lists[index] = lists[index].next;
+            if (lists[index] != null) {
+                pq.add(new PQNode(index, lists[index]));
+            }
+        }
+
+        printResult(head);
+
+        return head;
+    }
+
+    private void printResult(ListNode node) {
+        System.out.println("printing result: ");
+        while (node != null) {
+            System.out.print(node.val + "->");
+            node = node.next;
+        }
+        System.out.println("null");
     }
 
     public void init() {
@@ -69,6 +147,39 @@ public class MergeSortedLists {
     }
 }
 
+class PQNode {
+    int index;
+    ListNode node;
+
+    PQNode(int i, ListNode n) {
+        index = i;
+        node = n;
+    }
+
+    @Override
+    public String toString() {
+
+        return "[ index:" + index + "; node: " + node.val + "]";
+    }
+}
+
+class NodeComparator implements Comparator<PQNode> {
+
+    @Override
+    public int compare(PQNode o1, PQNode o2) {
+        if (o1.node.val > o2.node.val) {
+            return 1;
+        } else if (o1.node.val < o2.node.val) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+
+
+
 class ListNode {
       int val;
       ListNode next;
@@ -77,3 +188,5 @@ class ListNode {
           next = null;
       }
 }
+
+
