@@ -29,7 +29,7 @@ public class KeyPadPermutations {
     public static void main(String[] args) {
         KeyPadPermutations kp = new KeyPadPermutations();
 
-        int [] A = {2, 3, 4};
+        int [] A = {2, 3};
 
         System.out.println("input keys: " + Arrays.toString(A));
         kp.permute(A);
