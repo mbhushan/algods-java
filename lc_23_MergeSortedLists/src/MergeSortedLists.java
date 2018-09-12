@@ -55,7 +55,29 @@ public class MergeSortedLists {
     }
 
     public void merge() {
-        mergeKLists(lists);
+        //mergeKLists(lists);
+        mergeKListsGood(lists);
+    }
+
+    public ListNode mergeKListsGood(ListNode[] lists) {
+        if (lists==null||lists.length==0) return null;
+        PriorityQueue<ListNode> queue= new PriorityQueue<ListNode>(lists.length ,(a,b) -> a.val-b.val);
+        ListNode dummy = new ListNode(0);
+        ListNode tail=dummy;
+
+        for (ListNode node:lists)
+            if (node!=null)
+                queue.add(node);
+
+        System.out.println("queue: " + queue);
+        while (!queue.isEmpty()){
+            tail.next=queue.poll();
+            tail=tail.next;
+
+            if (tail.next!=null)
+                queue.add(tail.next);
+        }
+        return dummy.next;
     }
 
     public ListNode mergeKLists(ListNode[] lists) {
@@ -187,6 +209,12 @@ class ListNode {
           val = x;
           next = null;
       }
+
+    @Override
+    public String toString() {
+
+        return "[node: " + val + "]";
+    }
 }
 
 
