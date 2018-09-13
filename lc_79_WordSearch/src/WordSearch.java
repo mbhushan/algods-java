@@ -64,6 +64,7 @@ public class WordSearch {
                    visited[i][j] = true;
                    flag = findWord(board, i, j, word.toCharArray(), 0, visited);
                    if (flag) {
+
                        return flag;
                    }
                }
