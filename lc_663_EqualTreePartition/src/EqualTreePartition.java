@@ -43,12 +43,56 @@ import java.util.Stack;
 public class EqualTreePartition {
 
     private TreeNode root;
+    Stack<Integer> stack = new Stack<>();
+
+    public static void main(String[] args) {
+        EqualTreePartition bt = new EqualTreePartition();
+
+        bt.init();
+        bt.equalTree();
+
+    }
+
+    public void equalTree() {
+        boolean flag = checkEqualTree(this.root);
+        System.out.println("equal partition possible: " + flag);
+    }
 
     public boolean checkEqualTree(TreeNode root) {
 
         boolean flag = false;
 
 
+
+        int total = treeSum(this.root);
+
+        System.out.println("stack: " + stack);
+        System.out.println("total: " + total);
+
+        if (total%2 == 1) {
+            return false;
+        }
+
+        while (!stack.isEmpty()) {
+            if (stack.peek() == total/2) {
+                return true;
+            }
+            stack.pop();
+        }
+        return false;
+
+
+
+
+    }
+
+    private int treeSum(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        int sum  = treeSum(node.left) + treeSum(node.right) + node.val;
+        stack.push(sum);
+        return stack.peek();
     }
 
 
@@ -59,8 +103,8 @@ public class EqualTreePartition {
         this.root.left = new TreeNode(10);
 
         this.root.right = new TreeNode(10);
-        this.root.right.left = new TreeNode(10);
-        this.root.right.right = new TreeNode(10);
+        this.root.right.left = new TreeNode(2);
+        this.root.right.right = new TreeNode(3);
 
     }
 }
