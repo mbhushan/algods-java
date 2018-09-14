@@ -38,6 +38,13 @@ import java.util.Stack;
  Note:
  The range of tree node value is in the range of [-100000, 100000].
  1 <= n <= 10000
+
+ ===============
+ input / output
+ ===============
+ stack: [10, 2, 3, 15, 30]
+ total: 30
+ equal partition possible: true
  */
 
 public class EqualTreePartition {
