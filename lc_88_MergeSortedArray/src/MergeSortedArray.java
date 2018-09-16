@@ -18,6 +18,11 @@
 
  Output: [1,2,2,3,5,6]
 
+
+ ============ merge sort based solution with gurantee of O(nlogn) ===================
+ https://leetcode.com/problems/count-of-smaller-numbers-after-self/discuss/76583/11ms-JAVA-solution-using-merge-sort-with-explanation
+ 
+
  */
 
 public class MergeSortedArray {
