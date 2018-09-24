@@ -36,6 +36,16 @@ public class SingleNumber {
 
     }
 
+    public int singleNumberFast(int[] nums) {
+        int x = 0;
+
+        for (int n: nums) {
+            x ^= n;
+        }
+
+        return x;
+    }
+
     public int singleNumber(int[] nums) {
         if (nums == null || nums.length < 1) {
             return -1;
