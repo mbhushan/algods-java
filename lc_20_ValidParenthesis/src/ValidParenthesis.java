@@ -48,8 +48,24 @@ public class ValidParenthesis {
         for (String s: inputs) {
             System.out.println("input: " + s);
             System.out.println("is valid: " + vp.isValid(s));
+            System.out.println("is valid short solution: " + vp.isValidShort(s));
             System.out.println();
         }
+    }
+
+    public boolean isValidShort(String s) {
+        Stack<Character> stack = new Stack<Character>();
+        for (char c : s.toCharArray()) {
+            if (c == '(')
+                stack.push(')');
+            else if (c == '{')
+                stack.push('}');
+            else if (c == '[')
+                stack.push(']');
+            else if (stack.isEmpty() || stack.pop() != c)
+                return false;
+        }
+        return stack.isEmpty();
     }
 
     public boolean isValid(String s) {
