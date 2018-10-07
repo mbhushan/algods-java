@@ -1,3 +1,5 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +45,7 @@ public class MaximumSubarrayKSum {
         //3 -> 3
         //3 -> 5
         //
+        Deque<Integer> deque = new ArrayDeque<>();
         Map<Integer, Integer> map = new HashMap<>();
         int sum = 0;
         int max = 0;
