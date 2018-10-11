@@ -19,6 +19,10 @@
  Your runtime complexity should be less than O(n2).
  There is only one duplicate number in the array, but it could be repeated more than once.
 
+
+ O(n) solution:
+ http://keithschwarz.com/interesting/code/?dir=find-duplicate
+
  */
 public class FindDupNumber {
 
