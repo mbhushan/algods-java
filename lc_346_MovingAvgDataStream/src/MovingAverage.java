@@ -47,3 +47,24 @@ class MovingAverage {
         return (total*1.0) / capacity;
     }
 }
+
+class MovingAverage1 {
+    private double previousSum = 0.0;
+    private int maxSize;
+    private Queue<Integer> currentWindow;
+
+    public MovingAverage1(int size) {
+        currentWindow = new LinkedList<Integer>();
+        maxSize = size;
+    }
+
+    public double next(int val) {
+        if (currentWindow.size() == maxSize)
+        {
+            previousSum -= currentWindow.remove();
+        }
+
+        previousSum += val;
+        currentWindow.add(val);
+        return previousSum / currentWindow.size();
+    }}
