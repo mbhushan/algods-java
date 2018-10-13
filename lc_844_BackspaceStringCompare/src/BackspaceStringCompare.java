@@ -40,6 +40,37 @@ public class BackspaceStringCompare {
     }
 
     public boolean backspaceCompare(String S, String T) {
+        int m = S.length(), n = T.length(), i = m - 1, j = n - 1;
+        for (; i >= 0 && j >= 0; i--, j--) {
+            i = nextChar(S, i);
+            j = nextChar(T, j);
+            if (i >= 0 && j >= 0 && S.charAt(i) != T.charAt(j)) {
+                return false;
+            }
+        }
+        return nextChar(S, i) == nextChar(T, j);
+    }
+
+    // find the next validated char's index backwards
+    private int nextChar(String s, int start) {
+        int count = 0;
+        while (start >= 0) {
+            char c = s.charAt(start);
+            if (c == '#') {
+                count++;
+            } else {
+                if (count == 0) {
+                    return start;
+                } else {
+                    count--;
+                }
+            }
+            start--;
+        }
+        return start;
+    }
+
+    public boolean backspaceCompare2(String S, String T) {
         int i = S.length() - 1, j = T.length() - 1;
         while (true) {
             for (int back = 0; i >= 0 && (back > 0 || S.charAt(i) == '#'); --i)
