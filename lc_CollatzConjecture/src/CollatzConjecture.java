@@ -17,7 +17,7 @@ public class CollatzConjecture {
     public static void main(String[] args) {
         CollatzConjecture cc = new CollatzConjecture();
 
-        System.out.println(cc.maxSteps(10));
+        System.out.println(cc.maxSteps(100));
 
         String elements[] = { "A", "B", "C", "D", "E" };
         Set<String> set = new HashSet<String>(Arrays.asList(elements));
@@ -40,7 +40,8 @@ public class CollatzConjecture {
             System.out.println("i: " + i + "; max: " + max);
             x = calcStepsMemo(i, map);
             max1 = Math.max(x, max1);
-            System.out.println("i: " + i + "; max1: " + max1);
+            System.out.println("i: " + i + "; max memo: " + max1);
+            System.out.println();
         }
 
         return max;
@@ -52,6 +53,7 @@ public class CollatzConjecture {
        }
 
        if (map.containsKey(n)) {
+           System.out.println("returning from map: " + n);
            return map.get(n);
        }
        if (n%2 == 0) {
@@ -59,9 +61,9 @@ public class CollatzConjecture {
        } else {
            n = 3*n+1;
        }
-       if (map.containsKey(n)) {
-           return map.get(n)+1;
-       }
+//       if (map.containsKey(n)) {
+//           return map.get(n)+1;
+//       }
         int t = calcStepsMemo(n, map);
        map.put(n, t);
 

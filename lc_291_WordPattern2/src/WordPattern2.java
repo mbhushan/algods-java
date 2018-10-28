@@ -47,7 +47,7 @@ public class WordPattern2 {
                 "xyzabcxzyabc"
         };
 
-        for (int i=0; i<P.length; i++) {
+        for (int i=0; i<P.length-2; i++) {
             boolean flag = wp.wordPatternMatch(P[i], S[i]);
             System.out.println("ans: " + flag);
             System.out.println();
@@ -58,15 +58,22 @@ public class WordPattern2 {
     public boolean wordPatternMatch(String pattern, String str) {
         Map<Character, String> map = new HashMap<>();
         Set<String> set = new HashSet<>();
-        return wordPatternMatch(pattern, 0, str, 0, map, set);
+        boolean ans = wordPatternMatch(pattern, 0, str, 0, map, set);
+        System.out.println("ans: " + ans);
+        System.out.println("map: " + map);
+        System.out.println("set: " + set);
+        return  ans;
     }
 
     private boolean wordPatternMatch(String P, int i, String S, int j, Map<Character, String> map, Set<String> set) {
         if (i == P.length() && j == S.length()) {
+            System.out.println("map res: " + map);
+            System.out.println("set res: " + set);
             return true;
         }
 
         if (i == P.length() || j == S.length()) {
+
             return false;
         }
 
@@ -89,6 +96,7 @@ public class WordPattern2 {
         //pattern char doesnt exist in the map.
         for (int index=j; index<S.length(); index++) {
             String ps = S.substring(j,  index+1);
+            System.out.println("ps: " + ps);
 
             if (set.contains(ps)) {
                 continue;
@@ -100,6 +108,7 @@ public class WordPattern2 {
             if (wordPatternMatch(P, i+1, S, index+1, map, set)) {
                 return true;
             }
+
 
             //backtrack
             map.remove(ch);

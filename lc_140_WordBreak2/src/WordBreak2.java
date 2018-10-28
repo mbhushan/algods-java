@@ -50,6 +50,7 @@ import java.util.Set;
 
 public class WordBreak2 {
 
+    static HashMap<String,List<String>> map = new HashMap<String,List<String>>();
     public static void main(String[] args) {
         WordBreak2 wb = new WordBreak2();
 
@@ -66,27 +67,60 @@ public class WordBreak2 {
         };
 
         System.out.println("DFS approach: ");
-        for (int i=0; i<S.length; i++) {
-            wb.wordBreak(S[i], dicts[i]);
+        for (int i=0; i<S.length-2; i++) {
+            //wb.wordBreak(S[i], dicts[i]);
+            List<String> ans = wb.wordBreakMemoized(S[i], new HashSet<>(dicts[i]));
+            System.out.println("map: " + map);
+            System.out.println("ans: " + ans);
           //  System.out.println();
         }
         System.out.println();
 
         //wb.wordBreak("catsanddog", dicts[0]);
 
-        System.out.println("DFS with memoization WIP: ");
-        for (int i=0; i<S.length; i++) {
-            wb.wordBreak2(S[i], dicts[i]);
-           // System.out.println();
-        }
-        System.out.println();
-
-        System.out.println("DFS with memoization: ");
-        for (int i=0; i<S.length; i++) {
-            wb.wordBreak3(S[i], new HashSet<>(dicts[i]));
-            // System.out.println();
-        }
+//        System.out.println("DFS with memoization WIP: ");
+//        for (int i=0; i<S.length; i++) {
+//            wb.wordBreak2(S[i], dicts[i]);
+//           // System.out.println();
+//        }
+//        System.out.println();
+//
+//        System.out.println("DFS with memoization: ");
+//        for (int i=0; i<S.length; i++) {
+//            wb.wordBreak3(S[i], new HashSet<>(dicts[i]));
+//            // System.out.println();
+//        }
     }
+
+
+    public List<String> wordBreakMemoized(String s, Set<String> wordDict) {
+        List<String> res = new ArrayList<String>();
+        if(s == null || s.length() == 0) {
+            return res;
+        }
+        if(map.containsKey(s)) {
+            return map.get(s);
+        }
+        if(wordDict.contains(s)) {
+            res.add(s);
+        }
+        for(int i = 1 ; i < s.length() ; i++) {
+            String t = s.substring(i);
+            if(wordDict.contains(t)) {
+                List<String> temp = wordBreakMemoized(s.substring(0 , i) , wordDict);
+                if(temp.size() != 0) {
+                    for(int j = 0 ; j < temp.size() ; j++) {
+                        res.add(temp.get(j) + " " + t);
+                    }
+                    System.out.println("temp: " + temp);
+                }
+            }
+        }
+        map.put(s , res);
+        return res;
+    }
+
+
 
     public List<String> wordBreak(String s, List<String> wordDict) {
 
