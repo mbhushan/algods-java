@@ -56,7 +56,8 @@ public class BinaryTreeOps {
         btt.inorder();
         System.out.println();
 
-        btt.flattenBT();
+        btt.flatten();
+       // btt.flattenBT();
         System.out.println("flattening of binary tree done!");
 
     }
@@ -72,6 +73,29 @@ public class BinaryTreeOps {
         }
         System.out.println();
 
+    }
+
+    //version that does not use the global variable
+    public void flatten() {
+        root = helper(root, null);
+        Node node = root;
+        while (node != null) {
+            System.out.print(node.data + " ");
+            node = node.right;
+        }
+        System.out.println();
+    }
+    // helper function takes in the previous head, do the flattening and returns the head of the flatten binary tree
+    private Node helper(Node node, Node prev) {
+        if (node == null) {
+            return prev;
+        }
+        prev = helper(node.right, prev);
+        prev = helper(node.left, prev);
+        node.right = prev;
+        node.left = null;
+        prev = node;
+        return node;
     }
 
     private void flattenBTStack(Node node) {

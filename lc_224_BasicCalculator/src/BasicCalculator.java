@@ -32,6 +32,10 @@ public class BasicCalculator {
     public static void main(String[] args) {
         BasicCalculator bc = new BasicCalculator();
 
+        String s = "(1+(4+5+2)-3)";
+        int ans = bc.calculate(s);
+        System.out.println("ans: " + ans);
+
     }
 
     public int calculate(String s) {
